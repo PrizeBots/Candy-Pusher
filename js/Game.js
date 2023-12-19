@@ -17,15 +17,19 @@ class Game {
         // Create platform and pusher
         const platform = this.gameObjectManager.createPlatform();
         const pusher = this.gameObjectManager.createPusher();
+        this.gameObjectManager.createWalls(); 
 
-      // Start the game loop
-      this._startGameLoop();
+        // Start the game loop
+        this._startGameLoop();
     }
     _startGameLoop() {
         this.engine.runRenderLoop(() => {
+            this.gameObjectManager.updatePusher(); // Update the pusher's position
+
             this.scene.render();
         });
-    }}
+    }
+}
 
 // This line should be outside the class definition.
 const game = new Game('renderCanvas');
