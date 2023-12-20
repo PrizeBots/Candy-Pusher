@@ -18,7 +18,6 @@ class SceneManager {
     }
 
     _setupCamera() {
-        console.log('make camera')
         var camera = new BABYLON.ArcRotateCamera(
             "camera1", Math.PI / 2, Math.PI / 3.2, 120, 
             new BABYLON.Vector3(0, 0, 0), this.scene

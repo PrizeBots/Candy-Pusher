@@ -3,6 +3,8 @@ import { MaterialManager } from './MaterialManager.js';
 import { GameObjectManager } from './GameObjectManager.js';
 import { DropManager } from './DropManager.js';
 import { CoinPipeManager } from './CoinPipeManager.js';
+import { UIManager } from './UIManager.js'; // Add this line at the top with other imports
+
 class Game {
     constructor(canvasId) {
 
@@ -21,6 +23,7 @@ class Game {
 
         this.sceneManager = new SceneManager(this.engine, this.canvas);
         this.scene = this.sceneManager.getScene();
+        this.uiManager  = new UIManager(); 
 
         this.materialManager = new MaterialManager(this.scene);
         this.gameObjectManager = new GameObjectManager(this.scene, this.materialManager);
@@ -28,7 +31,7 @@ class Game {
         const platform = this.gameObjectManager.createPlatform();
         const platformImpostor = platform.physicsImpostor;
         this.dropManager = new DropManager(this.scene, this.materialManager, platformImpostor, this);
-        this.coinPipeManager = new CoinPipeManager(this.scene, this.materialManager, this.dropManager);
+        this.coinPipeManager = new CoinPipeManager(this.scene, this.materialManager, this.dropManager, this.uiManager);
 
         const pusher = this.gameObjectManager.createPusher();
         this.gameObjectManager.createWalls();
