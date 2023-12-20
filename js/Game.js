@@ -3,10 +3,19 @@ import { MaterialManager } from './MaterialManager.js';
 import { GameObjectManager } from './GameObjectManager.js';
 import { DropManager } from './DropManager.js';
 import { CoinPipeManager } from './CoinPipeManager.js';
-
-
 class Game {
     constructor(canvasId) {
+
+        document.getElementById('yourTestButtonId').addEventListener('click', () => {
+            this.thudSound.play();
+        });
+        // Unlock audio context on first user interaction
+        window.addEventListener('click', () => {
+            this.thudSound.play();
+            this.thudSound.pause();
+        }, { once: true });
+        window.addEventListener('keydown', (event) => this.onKeyDown(event));
+
         this.canvas = document.getElementById(canvasId);
         this.engine = new BABYLON.Engine(this.canvas, true);
 
@@ -15,19 +24,36 @@ class Game {
 
         this.materialManager = new MaterialManager(this.scene);
         this.gameObjectManager = new GameObjectManager(this.scene, this.materialManager);
-        this.dropManager = new DropManager(this.scene, this.materialManager);
+
+        const platform = this.gameObjectManager.createPlatform();
+        const platformImpostor = platform.physicsImpostor;
+        this.dropManager = new DropManager(this.scene, this.materialManager, platformImpostor, this);
         this.coinPipeManager = new CoinPipeManager(this.scene, this.materialManager, this.dropManager);
 
-        // Create platform and pusher
-        const platform = this.gameObjectManager.createPlatform();
         const pusher = this.gameObjectManager.createPusher();
-        this.gameObjectManager.createWalls(); 
-
+        this.gameObjectManager.createWalls();
         // Start the game loop
         this._startGameLoop();
         this._setupDropCoinButton();
+        this.thudSound = new BABYLON.Sound("thud", "../assets/sound/thud.mp3", this.scene, this.doAThing, {
+            autoplay: false,
+            volume:1,
+            loop: false
+        });
 
     }
+    doAThing(){
+        console.log('did a thing')
+    }
+    onKeyDown(event) {
+        console.log("onKeyDown onKeyDown");
+        // Play the sound when the 'P' key is pressed
+        if (event.key === 'p' || event.key === 'P') {
+            console.log("Playing sound");
+            this.thudSound.play();
+        }
+    }
+
     _startGameLoop() {
         this.engine.runRenderLoop(() => {
             this.gameObjectManager.updatePusher(); // Update the pusher's position
@@ -41,6 +67,8 @@ class Game {
         if (dropCoinButton) {
             dropCoinButton.addEventListener('click', () => {
                 this.coinPipeManager.dropCoinFromPipe(); // Drop a coin from the pipe
+                //this.dropManager.dropMonkeyModel(); // Drop the monkey model
+
             });
         }
     }

@@ -45,23 +45,23 @@ class GameObjectManager {
         platform.physicsImpostor = new BABYLON.PhysicsImpostor(
             platform,
             BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 1, kinematic: true  },
+            { mass: 0, restitution: 1, kinematic: false  },
             this.scene
         );
+        return { platform, physicsImpostor: platform.physicsImpostor };
 
-        return platform;
     }
 
     createPusher() {
-        const pusherSize = { width: 40, height: 10, depth: 20 };
+        const pusherSize = { width: 40, height: 5, depth: 20 };
         const pusher = BABYLON.MeshBuilder.CreateBox("pusher", pusherSize, this.scene);
-        pusher.position.y = 5;
+        pusher.position.y =3;
         pusher.position.z = -25;
         pusher.material = this.materialManager.getMaterial("pusherMaterial");
         pusher.physicsImpostor = new BABYLON.PhysicsImpostor(
             pusher,
             BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 1, friction: 1,kinematic: true },
+            { mass: 0, restitution: 1, friction: 1,kinematic: false },
             this.scene
         );
         this.pusher = pusher;

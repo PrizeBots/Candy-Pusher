@@ -6,6 +6,10 @@ class SceneManager {
         this.scene.enablePhysics(new BABYLON.Vector3(0, -40, 0), new BABYLON.CannonJSPlugin());
         this._setupLighting();
         this._setupCamera();
+
+        // this.scene.debugLayer.show({
+        //     showPhysicsImpostor: true
+        // });
     }
 
     _setupLighting() {
@@ -16,7 +20,7 @@ class SceneManager {
     _setupCamera() {
         console.log('make camera')
         var camera = new BABYLON.ArcRotateCamera(
-            "camera1", Math.PI / 2, Math.PI / 2.8, 120, 
+            "camera1", Math.PI / 2, Math.PI / 3.2, 120, 
             new BABYLON.Vector3(0, 0, 0), this.scene
         );
         camera.attachControl(this.canvas, true); // Ensure this line is uncommented
