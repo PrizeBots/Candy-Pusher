@@ -61,16 +61,18 @@ class DropManager {
             BABYLON.PhysicsImpostor.CylinderImpostor,
             { mass: 1, friction: 1, restitution: 0.1 },
             this.scene
+            
         );
+        const allImpostors = this.scene.getPhysicsEngine().getImpostors();
+
         // Register collision event only with the platform
-        coin.physicsImpostor.registerOnPhysicsCollide([this.platformImpostor], () => {
+        coin.physicsImpostor.registerOnPhysicsCollide(allImpostors, (main, collided) => {
             if (!coin.hasCollided) {
                 console.log('THUD!')
                 this.game.thudSound.play(); // Now 'this.game' should be defined
                 coin.hasCollided = true; // Set a flag to ensure sound is played only once
             }
         });
-
 
         return coin;
     }
