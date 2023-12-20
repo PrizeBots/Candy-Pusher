@@ -5,19 +5,17 @@ class GameObjectManager {
         this.pusher = null;
         this.pusherSpeed = 0.1;
         this.pusherDirection = 1;
-        this.pusherLimitFront = -20;
+        this.pusherLimitFront = 0;
         this.pusherLimitBack = -30;
     }
     createTriangleWall(position, rotation) {
-        const wall = new BABYLON.MeshBuilder.CreateCylinder("triangleWall", {
-            diameterTop: 0, 
-            diameterBottom: 2, 
-            height: 10, 
-            tessellation: 3
-        }, this.scene);
+        const wallSize = { width: 40, height: 10, depth: 20 };
+        const wall = BABYLON.MeshBuilder.CreateBox("platform", wallSize, this.scene);
 
         wall.position = position;
         wall.rotation = rotation;
+        //wall.rotation.x = Math.PI / 2; // Rotate 90 degrees around the X-axis
+        wall.rotation.y = Math.PI / 2
         wall.material = this.materialManager.getMaterial("wallMaterial");
         wall.physicsImpostor = new BABYLON.PhysicsImpostor(
             wall,
@@ -30,11 +28,12 @@ class GameObjectManager {
     }
 
     createWalls() {
-        const leftWallPosition = new BABYLON.Vector3(-20, 0, 0);
+        const wallDistance= 30;
+        const leftWallPosition = new BABYLON.Vector3(-wallDistance, 0, 0);
         const leftWallRotation = new BABYLON.Vector3(0, BABYLON.Tools.ToRadians(90), 0);
         this.createTriangleWall(leftWallPosition, leftWallRotation);
 
-        const rightWallPosition = new BABYLON.Vector3(20, 0, 0);
+        const rightWallPosition = new BABYLON.Vector3(wallDistance, 0, 0);
         const rightWallRotation = new BABYLON.Vector3(0, BABYLON.Tools.ToRadians(-90), 0);
         this.createTriangleWall(rightWallPosition, rightWallRotation);
     }
@@ -46,7 +45,7 @@ class GameObjectManager {
         platform.physicsImpostor = new BABYLON.PhysicsImpostor(
             platform,
             BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 1 },
+            { mass: 0, restitution: 1, kinematic: true  },
             this.scene
         );
 
@@ -56,13 +55,13 @@ class GameObjectManager {
     createPusher() {
         const pusherSize = { width: 40, height: 10, depth: 20 };
         const pusher = BABYLON.MeshBuilder.CreateBox("pusher", pusherSize, this.scene);
-        pusher.position.y = 0.1;
+        pusher.position.y = 5;
         pusher.position.z = -25;
         pusher.material = this.materialManager.getMaterial("pusherMaterial");
         pusher.physicsImpostor = new BABYLON.PhysicsImpostor(
             pusher,
             BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 0.1, kinematic: true },
+            { mass: 0, restitution: 1, friction: 1,kinematic: true },
             this.scene
         );
         this.pusher = pusher;

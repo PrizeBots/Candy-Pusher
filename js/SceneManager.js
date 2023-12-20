@@ -3,7 +3,7 @@ class SceneManager {
         this.engine = engine;
         this.canvas = canvas;
         this.scene = new BABYLON.Scene(engine);
-        this.scene.enablePhysics(new BABYLON.Vector3(0, -30, 0), new BABYLON.CannonJSPlugin());
+        this.scene.enablePhysics(new BABYLON.Vector3(0, -40, 0), new BABYLON.CannonJSPlugin());
         this._setupLighting();
         this._setupCamera();
     }
