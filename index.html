@@ -4,13 +4,14 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1, user-scalable=no">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="/style.css">
     <title>Game Time!</title>
-    <!-- Babylon.js -->
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
     <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
-
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
+    <!-- <script src=" https://cdn.babylonjs.com/havok/HavokPhysics_umd.js"></script> -->
+
     <style>
         html,
         body {
@@ -45,9 +46,24 @@
             justify-content: center;
         }
     </style>
+    <!-- <style>
+        /* Add this CSS to hide the canvas and buttons initially */
+        #renderCanvas,
+        #dropCoinButton,
+        #yourTestButtonId,
+        #dropBonusButton,
+        #coinCount,
+        #prizePool {
+            display: none;
+        }
+    </style> -->
 </head>
+
 <body>
-    <canvas id="renderCanvas"></canvas>
+    <canvas id="renderCanvas" width="1031" height="580"></canvas>
+
+    <button id="startButton">Start Game</button>
+
     <button id="dropCoinButton">Drop Coin</button>
     <button id="yourTestButtonId">yourTestButtonIdn</button>
     <button id="dropBonusButton">Drop Bonus</button>
@@ -55,6 +71,7 @@
     <div id="prizePool">Prize Pool: 0</div>
 
     <!-- Import Game.js as a module -->
-    <script type="module" src="js/Game.js"></script>
+    <script type="module" src="src/Game.js"></script>
 </body>
+
 </html>

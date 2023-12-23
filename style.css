@@ -12,4 +12,20 @@ html, body {
     touch-action: none;
 }
 
-/* Add more styles as needed */
+#dropCounter {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 20px;
+}
+
+/* Style for the cookies counter */
+#cookieCounter {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-size: 20px;
+}

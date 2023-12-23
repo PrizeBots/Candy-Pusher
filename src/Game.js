@@ -1,16 +1,21 @@
-import { SceneManager } from './SceneManager.js';
-import { MaterialManager } from './MaterialManager.js';
-import { GameObjectManager } from './GameObjectManager.js';
-import { DropManager } from './DropManager.js';
-import { CoinPipeManager } from './CoinPipeManager.js';
-import { UIManager } from './UIManager.js'; // Add this line at the top with other imports
+import { SceneManager } from './Managers/SceneManager.js';
+import { MaterialManager } from './Managers/MaterialManager.js';
+import { GameObjectManager } from './Managers/GameObjectManager.js';
+import { DropManager } from './Managers/DropManager.js';
+import { CoinPipeManager } from './Managers/CoinPipeManager.js';
+import { UIManager } from './Managers/UIManager.js'; // Add this line at the top with other imports
 
 class Game {
     constructor(canvasId) {
 
-        document.getElementById('yourTestButtonId').addEventListener('click', () => {
-            this.thudSound.play();
-        });
+        const startButton = document.getElementById('startButton');
+        if (startButton) {
+            startButton.addEventListener('click', () => {
+                this.startGame(); // Call a function to start the game
+            });
+        }
+            // Define a function to start the game and show/hide elements
+
         // Unlock audio context on first user interaction
         window.addEventListener('click', () => {
             this.thudSound.play();
@@ -26,7 +31,12 @@ class Game {
         this.uiManager  = new UIManager(); 
 
         this.materialManager = new MaterialManager(this.scene);
-        this.gameObjectManager = new GameObjectManager(this.scene, this.materialManager);
+        this.gameObjectManager = new GameObjectManager(this.scene, this.materialManager,this.uiManager);
+
+
+        // this.gameObjectManager = new GameObjectManager(this.scene, this.materialManager);
+        // this.gameObjectManager.loadCustomPlatform(); 
+
 
         const platform = this.gameObjectManager.createPlatform();
         const platformImpostor = platform.physicsImpostor;
@@ -34,7 +44,9 @@ class Game {
         this.coinPipeManager = new CoinPipeManager(this.scene, this.materialManager, this.dropManager, this.uiManager);
 
         const pusher = this.gameObjectManager.createPusher();
-        this.gameObjectManager.createWalls();
+
+        this.gameObjectManager.createGoalPlane(this.uiManager);
+
         // Start the game loop
         this._startGameLoop();
         this._setupDropCoinButton();
@@ -44,6 +56,40 @@ class Game {
             loop: false
         });
 
+    }
+    startGame() {
+        // Hide the start button
+        const startButton = document.getElementById('startButton');
+        if (startButton) {
+            startButton.style.display = 'none';
+        }
+
+        // Show the canvas and other game elements
+        const canvas = document.getElementById('renderCanvas');
+        const yourTestButton = document.getElementById('yourTestButtonId');
+        const dropCoinButton = document.getElementById('dropCoinButton');
+        const dropBonusButton = document.getElementById('dropBonusButton');
+        const coinCount = document.getElementById('coinCount');
+        const prizePool = document.getElementById('prizePool');
+
+        if (canvas) {
+            canvas.style.display = 'block';
+        }
+        if (yourTestButton) {
+            yourTestButton.style.display = 'block';
+        }
+        if (dropCoinButton) {
+            dropCoinButton.style.display = 'block';
+        }
+        if (dropBonusButton) {
+            dropBonusButton.style.display = 'block';
+        }
+        if (coinCount) {
+            coinCount.style.display = 'block';
+        }
+        if (prizePool) {
+            prizePool.style.display = 'block';
+        }
     }
     doAThing(){
         console.log('did a thing')

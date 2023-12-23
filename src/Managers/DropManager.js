@@ -44,37 +44,40 @@ class DropManager {
     }
 
     dropCoin() {
-        const coinDiameter = 8; // Set the diameter of the coin
-        const coinHeight = 2; // Set the height of the coin
+        const coinDiameter = 6; // Set the diameter of the coin
+        const coinHeight = 1; // Set the height of the coin
         const coinMaterial = this.materialManager.getMaterial("gold"); // Get gold material
 
-        const coin = BABYLON.MeshBuilder.CreateCylinder("coin", {
+
+        const cookie = BABYLON.MeshBuilder.CreateCylinder("cookie", {
             diameter: coinDiameter,
             height: coinHeight
         }, this.scene);
 
-        coin.material = coinMaterial;
-        coin.position = new BABYLON.Vector3(0, 40, 0); // Set initial position
-
-        coin.physicsImpostor = new BABYLON.PhysicsImpostor(
-            coin,
+        cookie.material = coinMaterial;
+        cookie.position = new BABYLON.Vector3(0, 40, 0); // Set initial position
+        cookie.name = "cookie";
+        cookie.physicsImpostor = new BABYLON.PhysicsImpostor(
+            cookie,
             BABYLON.PhysicsImpostor.CylinderImpostor,
-            { mass: 1, friction: 1, restitution: 0.1 },
+            { mass: .2, friction: .05, restitution: 0.1 },
             this.scene
-            
+
         );
+        this.game.uiManager.decrementCookieCount(); // Decrement cookie count when a cookie is dropped
+
         const allImpostors = this.scene.getPhysicsEngine().getImpostors();
 
         // Register collision event only with the platform
-        coin.physicsImpostor.registerOnPhysicsCollide(allImpostors, (main, collided) => {
-            if (!coin.hasCollided) {
+        cookie.physicsImpostor.registerOnPhysicsCollide(allImpostors, (main, collided) => {
+            if (!cookie.hasCollided) {
                 console.log('THUD!')
                 this.game.thudSound.play(); // Now 'this.game' should be defined
-                coin.hasCollided = true; // Set a flag to ensure sound is played only once
+                cookie.hasCollided = true; // Set a flag to ensure sound is played only once
             }
         });
 
-        return coin;
+        return cookie;
     }
 }
 
