@@ -3,15 +3,15 @@ class SceneManager {
         this.engine = engine;
         this.canvas = canvas;
         this.scene = new BABYLON.Scene(engine);
-        this.scene.enablePhysics(new BABYLON.Vector3(0, -40, 0), new BABYLON.CannonJSPlugin());
-        this.engine = new BABYLON.Engine(this.canvas, true, { antialias: true });
+        this.scene.enablePhysics(new BABYLON.Vector3(0, -120, 0), new BABYLON.CannonJSPlugin());
+        this.engine = new BABYLON.Engine(this.canvas, true, { antialias: true, allowSleep: true, sleepTimeLimit:2 });
 
         this._setupLighting();
         this._setupCamera();
-
-        // this.scene.debugLayer.show({
-        //     showPhysicsImpostor: true
-        // });
+      
+        this.scene.debugLayer.show({
+            showPhysicsImpostor: true
+        });
         // this.scene.debugLayer.show({
         //     embedMode: true,
         //     overlay: true,

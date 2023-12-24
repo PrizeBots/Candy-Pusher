@@ -3,21 +3,20 @@ export class Platform {
     constructor(scene, materialManager) {
         this.scene = scene;
         this.materialManager = materialManager;
-        
     }
 
     create() {
         // Create main platform
-        const mainPlatformSize = { width: 50, height: 2, depth: 120 };
+        const mainPlatformSize = { width: 50, height: 2, depth: 100 };
         const mainPlatform = BABYLON.MeshBuilder.CreateBox("mainPlatform", mainPlatformSize, this.scene);
         mainPlatform.position.y = -1;
-        mainPlatform.position.z = 10;
+        mainPlatform.position.z = 20;
         mainPlatform.material = this.materialManager.getMaterial("platformMaterial");
         // Add physics impostor to the main platform
         mainPlatform.physicsImpostor = new BABYLON.PhysicsImpostor(
             mainPlatform,
             BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 0.1 },
+            { mass: 0, restitution: 0.1,friction: .01 },
             this.scene
         );
 
@@ -98,30 +97,30 @@ export class Platform {
                 z: -Math.PI / slopeAngle
             }
         });
-        // const rightWall2 = this.createWall({
-        //     width: wallWidth,
-        //     height: wallHeight,
-        //     depth: wallDepth,
-        //     position: {
-        //         x: -27,
-        //         y: -5,
-        //         z: 50
-        //     },
+        const rightWall2 = this.createWall({
+            width: wallWidth,
+            height: wallHeight/2,
+            depth: wallDepth,
+            position: {
+                x: -25,
+                y: -15,
+                z: 80
+            },
          
-        // });
-        // // Create right wall
-        // const leftWall2 = this.createWall({
-        //     width: wallWidth,
-        //     height: wallHeight,
-        //     depth: wallDepth,
-        //     position: {
-        //         x: 30,
-        //         y: -5,
-        //         z: 50
-        //     },
+        });
+        // Create right wall
+        const leftWall2 = this.createWall({
+            width: wallWidth,
+            height: wallHeight/2,
+            depth: wallDepth,
+            position: {
+                x: 25,
+                y: -15,
+                z: 80
+            },
       
-        // });
-        ///leftWall.rotation.y = Math.PI / 4;
+        });
+   
         // Parent the walls to the main platform for easy manipulation as a single entity
         mainPlatform.addChild(leftWall);
         mainPlatform.addChild(rightWall);

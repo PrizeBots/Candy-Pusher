@@ -1,12 +1,15 @@
+import { Objects } from '../Components/Objects.js';
+
 class DropManager {
-    constructor(scene, materialManager, platformImpostor, gameInstance) {
+    constructor(scene, materialManager, platformImpostor, game) {
         this.scene = scene;
-        this.game = gameInstance;
+        this.game = game;
         this.materialManager = materialManager;
         this.loadedMonkeyModel = null;
         this.scaleFactor = 2; // Define scaleFactor as a class propertys
         //  this.loadMonkeyModel(); // Load the model when the class is instantiated
         this.platformImpostor = platformImpostor; // Add this line
+        this.objects = new Objects(this.scene, this.materialManager, this.game);
 
     }
 
@@ -43,42 +46,20 @@ class DropManager {
         }
     }
 
-    dropCoin() {
-        const coinDiameter = 6; // Set the diameter of the coin
-        const coinHeight = 1; // Set the height of the coin
-        const coinMaterial = this.materialManager.getMaterial("gold"); // Get gold material
-
-
-        const cookie = BABYLON.MeshBuilder.CreateCylinder("cookie", {
-            diameter: coinDiameter,
-            height: coinHeight
-        }, this.scene);
-
-        cookie.material = coinMaterial;
-        cookie.position = new BABYLON.Vector3(0, 40, 0); // Set initial position
-        cookie.name = "cookie";
-        cookie.physicsImpostor = new BABYLON.PhysicsImpostor(
-            cookie,
-            BABYLON.PhysicsImpostor.CylinderImpostor,
-            { mass: .2, friction: .05, restitution: 0.1 },
-            this.scene
-
-        );
-        this.game.uiManager.decrementCookieCount(); // Decrement cookie count when a cookie is dropped
-
-        const allImpostors = this.scene.getPhysicsEngine().getImpostors();
-
-        // Register collision event only with the platform
-        cookie.physicsImpostor.registerOnPhysicsCollide(allImpostors, (main, collided) => {
-            if (!cookie.hasCollided) {
-                console.log('THUD!')
-                this.game.thudSound.play(); // Now 'this.game' should be defined
-                cookie.hasCollided = true; // Set a flag to ensure sound is played only once
-            }
-        });
+    dropCookie(playerDropped) {
+        const cookie = this.objects.createCookie(playerDropped);
 
         return cookie;
+   
     }
+
+    dropDonut() {
+        const donut = this.objects.createDonut();
+        //const donut = this.objects.createCupcake();
+        return donut;
+   
+    }
+
 }
 
 export { DropManager };

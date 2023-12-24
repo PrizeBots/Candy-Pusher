@@ -1,7 +1,8 @@
 import { Platform } from '../Components/Platform.js';
 class GameObjectManager {
-    constructor(scene, materialManager, UIManager) {
+    constructor(scene, materialManager, game) {
         this.scene = scene;
+        this.game = game;
         this.materialManager = materialManager;
         this.pusher = null;
         this.pusherSpeed = 0.25;
@@ -10,26 +11,44 @@ class GameObjectManager {
         this.pusherLimitBack = -40;
     }
 
-    createGoalPlane(UIManager) {
+    createCapturePlane() {
+        const capturePlane = BABYLON.MeshBuilder.CreateGround("capturePlane", { width: 100, height: 40, depth: 0 }, this.scene);
+        capturePlane.position.y = -10;
+        capturePlane.position.z = 48;
+        capturePlane.isVisible = true;
+        capturePlane.physicsImpostor = new BABYLON.PhysicsImpostor(
+            capturePlane,
+            BABYLON.PhysicsImpostor.BoxImpostor,
+            { mass: 0, restitution: 0, kinematic: false },
+            this.scene
+        );
+        capturePlane.physicsImpostor.registerOnPhysicsCollide(this.scene.getPhysicsEngine().getImpostors(), (main, collided) => {
+            collided.object.dispose();
+            console.log("capturePlane");
+            
+
+        });
+        return capturePlane;
+    }
+
+    createGoalPlane() {
         const goalPlane = BABYLON.MeshBuilder.CreateGround("goalPlane", { width: 40, height: 30, depth: 0 }, this.scene);
         goalPlane.position.y = -20;
-        goalPlane.position.z = 100;
+        goalPlane.position.z = 80;
         goalPlane.isVisible = true;
-
         goalPlane.physicsImpostor = new BABYLON.PhysicsImpostor(
             goalPlane,
             BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 0, kinematic: true },
+            { mass: 0, restitution: 0, kinematic: false },
             this.scene
         );
         goalPlane.physicsImpostor.registerOnPhysicsCollide(this.scene.getPhysicsEngine().getImpostors(), (main, collided) => {
             if (collided.object.name === "cookie") {
+                this.game.getSound.play(); // Now 'this.game' should be defined
                 collided.object.dispose(); // Remove the cookie
-                UIManager.incrementCookieCount(); // Call the method on the UIManager instance
+                this.game.uiManager.incrementCookieCount(); // Call the method on the UIManager instance
             }
         });
-
-
         return goalPlane;
     }
     createPlatform() {
@@ -43,21 +62,12 @@ class GameObjectManager {
         pusher.position.y = 1;
         pusher.position.z = -25;
         pusher.material = this.materialManager.getMaterial("pusherMaterial");
-        
-        // Create a larger invisible box for the physics impostor
-        const pusherPhysicsSize = { width: 50, height: 10, depth: 70 };
-        
-        // Adjust the position to match the pusher
-        const pusherPhysicsPosition = new BABYLON.Vector3(0, 1, -25);
-        
-        // Create the physics impostor using the larger size and position
         pusher.physicsImpostor = new BABYLON.PhysicsImpostor(
             pusher,
             BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 0.1, friction: 0.05, kinematic: true, size: pusherPhysicsSize, position: pusherPhysicsPosition },
+            { mass: 0, restitution: 0, friction: .5, kinematic: true },
             this.scene
         );
-        
         this.pusher = pusher;
         return pusher;
     }

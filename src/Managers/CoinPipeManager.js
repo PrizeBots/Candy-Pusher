@@ -1,23 +1,19 @@
 class CoinPipeManager {
-    constructor(scene, materialManager, dropManager, UIManager) {
+    constructor(scene, materialManager, dropManager, game) {
         this.scene = scene;
         this.materialManager = materialManager;
         this.dropManager = dropManager;
-        this.UIManager = UIManager;
-        this.cookieCount = 100; // Start with 100 cookies
-
+        this.game = game;
         this.maxDrops = 6;
         this.availableDrops = this.maxDrops;
         this.dropCooldown = 1000; // 3 seconds in milliseconds
         this.cooldownTimer = null;
-        this.coinPipeSpeed = 0.5;
-        this.coinPipeLimit = 25;
+        this.coinPipeSpeed = 0.25;
+        this.coinPipeLimit = 20;
         this.coinPipeDirection = 1;
         this.createCoinPipe();
-        this.UIManager.updateDropCounter(this.availableDrops); // Update UI
-        this.UIManager.updateCookieCounter(this.cookieCount); // Initialize cookie counter in UI
-
-
+        this.game.uiManager.updateDropCounter(this.availableDrops); // Update UI
+        this.game.uiManager.updateCookieCounter(this.cookieCount); // Initialize cookie counter in UI
     }
 
     createCoinPipe() {
@@ -25,13 +21,9 @@ class CoinPipeManager {
         this.coinPipe = BABYLON.MeshBuilder.CreateCylinder("coinPipe", pipeSize, this.scene);
         this.coinPipe.position = new BABYLON.Vector3(0, 30, 0); // Set initial position
         this.coinPipe.material = this.materialManager.getMaterial("someMaterial"); // Set the material
-
-        // You can add physics to the coin pipe if required
-        // this.coinPipe.physicsImpostor = new BABYLON.PhysicsImpostor(...);
     }
 
     updateCoinPipe() {
-        // Update the position of the coin pipe
         this.coinPipe.position.x += this.coinPipeSpeed * this.coinPipeDirection;
         if (this.coinPipe.position.x > this.coinPipeLimit || this.coinPipe.position.x < -this.coinPipeLimit) {
             this.coinPipeDirection *= -1;
@@ -39,16 +31,16 @@ class CoinPipeManager {
     }
 
     dropCoinFromPipe() {
-        if (this.availableDrops > 0 && this.cookieCount > 0) {
-            const coin = this.dropManager.dropCoin();
-            coin.position = this.coinPipe.position.clone();
+        if (this.availableDrops > 0 && this.game.cookieCount > 0) {
+            const cookie = this.dropManager.dropCookie();
+            cookie.position = this.coinPipe.position.clone();
             this.consumeDrop();
             this.consumeCookie(); // Deduct a cookie
         }
     }
     consumeDrop() {
         this.availableDrops -= 1;
-        this.UIManager.updateDropCounter(this.availableDrops); // Update UI
+        this.game.uiManager.updateDropCounter(this.availableDrops); // Update UI
 
         // Clear existing timer and start a new one
         clearTimeout(this.cooldownTimer);
@@ -59,19 +51,19 @@ class CoinPipeManager {
     incrementDrop() {
         if (this.availableDrops < this.maxDrops) {
             this.availableDrops += 1;
-            this.UIManager.updateDropCounter(this.availableDrops); // Update UI
+            this.game.uiManager.updateDropCounter(this.availableDrops); // Update UI
             this.cooldownTimer = setTimeout(() => {
                 this.incrementDrop();
             }, 500); // Increment drop every 0.5 seconds
         }
     }
     consumeCookie() {
-        this.cookieCount -= 1; // Deduct one cookie
-        this.UIManager.updateCookieCounter(this.cookieCount); // Update UI
+        this.game.cookieCount -= 1; // Deduct one cookie
+        this.game.uiManager.updateCookieCounter(this.game.cookieCount); // Update UI
     }
     resetDrops() {
         this.availableDrops = this.maxDrops;
-        this.UIManager.updateDropCounter(this.availableDrops); // Update UI
+        this.game.uiManager.updateDropCounter(this.availableDrops); // Update UI
     }
 }
 

@@ -1,7 +1,7 @@
 // UIManager.js
 class UIManager {
-    constructor() {
-        this.cookieCount = 100; // Initialize with starting cookie count
+    constructor(game) {
+        this.game = game;
 
         // Create and append drop counter element
         this.dropCounterElement = document.createElement('div');
@@ -15,19 +15,17 @@ class UIManager {
 
         // Initialize UI
         this.updateDropCounter(6);
-        this.updateCookieCounter(0);
+        this.updateCookieCounter(this.game.cookieCount);
     }
     decrementCookieCount() {
-        if (this.cookieCount > 0) {
-            this.cookieCount -= 1;
-            this.updateCookieCounter(this.cookieCount);
+        if (this.game.cookieCount > 0) {
+            this.game.cookieCount -= 1;
+            this.updateCookieCounter(this.game.cookieCount);
         }
     }
     incrementCookieCount() {
-        console.log("Current cookie count:", this.cookieCount);
-        this.cookieCount ++;
-        console.log("New cookie count:", this.cookieCount);
-        this.updateCookieCounter(this.cookieCount);
+        this.game.cookieCount += 1;
+        this.updateCookieCounter(this.game.cookieCount);
     }
 
     updateDropCounter(availableDrops) {
@@ -35,9 +33,9 @@ class UIManager {
     }
 
     updateCookieCounter(cookieCount) {
-        this.cookieCounterElement.textContent = `Cookies: ${cookieCount}`;
+        this.cookieCounterElement.textContent = `Cookies: ${this.game.cookieCount}`;
     }
-    
+
 }
 
 export { UIManager };

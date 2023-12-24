@@ -4,6 +4,7 @@ class MaterialManager {
         this.wallMaterial = null;
         this.pusherMaterial = null;
         this.coinMaterials = {};
+        this.objectMaterials = {};
         this._createMaterials();
     }
 
@@ -27,11 +28,16 @@ class MaterialManager {
         this.coinMaterials['blue'] = new BABYLON.StandardMaterial("coinBlueMat", this.scene);
         this.coinMaterials['blue'].diffuseColor = new BABYLON.Color3(0, 0, 1); // Blue color
 
-        // Add more materials as needed
-    }
+         // Donut Material
+         this.objectMaterials['donut'] = new BABYLON.StandardMaterial("donut", this.scene);
+         this.objectMaterials['donut'].diffuseColor = new BABYLON.Color3(1, 0.5, 0.5);
+        }
     getMaterial(name) {
         if (this.coinMaterials[name]) {
             return this.coinMaterials[name];
+        }
+        if (this.objectMaterials[name]) {
+            return this.objectMaterials[name];
         }
         if (name === 'wallMaterial') {
             return this.wallMaterial;
