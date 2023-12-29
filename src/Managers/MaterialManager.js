@@ -9,6 +9,9 @@ class MaterialManager {
     }
 
     _createMaterials() {
+        // CollisionBoxMaterial 
+        this.collisionBoxMaterial = new BABYLON.StandardMaterial("collisionBoxMaterial", this.scene);
+        this.collisionBoxMaterial.diffuseColor = new BABYLON.Color3(0.196, 0.784, 0.196);
         // Wall Material
         this.wallMaterial = new BABYLON.StandardMaterial("wallMaterial", this.scene);
         this.wallMaterial.diffuseColor = new BABYLON.Color3(0, 0.31, 0.31);
@@ -28,10 +31,10 @@ class MaterialManager {
         this.coinMaterials['blue'] = new BABYLON.StandardMaterial("coinBlueMat", this.scene);
         this.coinMaterials['blue'].diffuseColor = new BABYLON.Color3(0, 0, 1); // Blue color
 
-         // Donut Material
-         this.objectMaterials['donut'] = new BABYLON.StandardMaterial("donut", this.scene);
-         this.objectMaterials['donut'].diffuseColor = new BABYLON.Color3(1, 0.5, 0.5);
-        }
+        // Donut Material
+        this.objectMaterials['donut'] = new BABYLON.StandardMaterial("donut", this.scene);
+        this.objectMaterials['donut'].diffuseColor = new BABYLON.Color3(1, 0.5, 0.5);
+    }
     getMaterial(name) {
         if (this.coinMaterials[name]) {
             return this.coinMaterials[name];
@@ -44,6 +47,9 @@ class MaterialManager {
         }
         if (name === 'pusherMaterial') {
             return this.pusherMaterial;
+        }
+        if (name === 'collisionBoxMaterial') {
+            return this.collisionBoxMaterial;
         }
         return null; // Or a default material
     }

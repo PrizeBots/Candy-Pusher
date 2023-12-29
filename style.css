@@ -11,11 +11,18 @@ html, body {
     height: 100%;
     touch-action: none;
 }
-
-#dropCoinButton {
+#testColor {
+    position: absolute;
+    top: 70px;
+    left: 2%;
+    color: rgb(56, 199, 51);
+    font-size: 20px;
+}
+/* Drop and Make Cookie Buttons*/
+#dropCookieButton {
     position: absolute;
     bottom: 20px;
-    left: 50%;
+    left: 65%;
     transform: translateX(-50%);
     width: 100px;
     height: 100px;
@@ -29,29 +36,86 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+#makeCookieButton {
+    position: absolute;
+    bottom: 20px;
+    left: 35%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: red;
+    color: rgb(0, 0, 0);
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Drop and Score */
+#scoreCounter {
+    position: absolute;
+    top: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 20px;
+}
 #dropCounter {
     position: absolute;
-    top: 10px;
+    top: 140px;
     left: 50%;
     transform: translateX(-50%);
     color: white;
     font-size: 20px;
 }
 
-/* Style for the cookies counter */
+/* Counter Labels */
 #cookieCounter {
     position: absolute;
     top: 10px;
-    left: 10px;
+    left:2%;
     color: white;
     font-size: 20px;
 }
-
+#cupcakeCounter {
+    position: absolute;
+    top: 40px;
+    left: 2%;
+    color: white;
+    font-size: 20px;
+}
+#donutCounter {
+    position: absolute;
+    top: 70px;
+    left: 2%;
+    color: white;
+    font-size: 20px;
+}
+/* Debug buttons */
 #wallButton {
     position: absolute;
     bottom: 20px;
-    top: 10px;
-    right: 200px;
+    top: 50px;
+    right: 2%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgb(255, 0, 0);
+    color: rgb(0, 0, 0);
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#bigPush {
+    position: absolute;
+    bottom: 20px;
+    top: 250px;
+    right: 2%;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -67,8 +131,8 @@ html, body {
 #dropDonutButton {
     position: absolute;
     bottom: 20px;
-    top: 65px;
-    right: 400px;
+    bottom: 25%;
+    right: 5%;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -81,11 +145,11 @@ html, body {
     align-items: center;
     justify-content: center;
 }
-#dropTreasure {
+#dropCupcakeButton {
     position: absolute;
     bottom: 20px;
-    top: 125px;
-    right: 200px;
+    bottom: 15%;
+    right: 5%;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -98,28 +162,11 @@ html, body {
     align-items: center;
     justify-content: center;
 }
-#dropCookies {
+#toggleCameraLockButton {
     position: absolute;
     bottom: 20px;
-    top: 185px;
-    right: 200px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: red;
-    color: rgb(0, 0, 0);
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-#bigPush {
-    position: absolute;
-    bottom: 20px;
-    top: 250px;
-    right: 200px;
+    bottom: 5%;
+    right: 5%;
     width: 50px;
     height: 50px;
     border-radius: 50%;

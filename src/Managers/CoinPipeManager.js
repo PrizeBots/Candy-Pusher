@@ -17,9 +17,9 @@ class CoinPipeManager {
     }
 
     createCoinPipe() {
-        const pipeSize = { height: 10, diameter: 5 };
+        const pipeSize = { height: 30, diameter: 10 };
         this.coinPipe = BABYLON.MeshBuilder.CreateCylinder("coinPipe", pipeSize, this.scene);
-        this.coinPipe.position = new BABYLON.Vector3(0, 30, 0); // Set initial position
+        this.coinPipe.position = new BABYLON.Vector3(0, 50, 0); // Set initial position
         this.coinPipe.material = this.materialManager.getMaterial("someMaterial"); // Set the material
     }
 
@@ -32,16 +32,19 @@ class CoinPipeManager {
 
     dropCoinFromPipe() {
         if (this.availableDrops > 0 && this.game.cookieCount > 0) {
-            const cookie = this.dropManager.dropCookie();
-            cookie.position = this.coinPipe.position.clone();
+           var dropPoint = new BABYLON.Vector3(this.coinPipe.position.x, this.coinPipe.position.y-16, this.coinPipe.position.z);
+       //     var dropPoint = this.coinPipe.position.clone();
+           
+            const cookie = this.dropManager.dropCookie(true, dropPoint);
+            this.game.poofSound.play();
             this.consumeDrop();
-            this.consumeCookie(); // Deduct a cookie
+            this.game.cookieCount -= 1; // Deduct one cookie
+            this.game.uiManager.updateCookieCounter(this.game.cookieCount); // Update UI
         }
     }
     consumeDrop() {
         this.availableDrops -= 1;
         this.game.uiManager.updateDropCounter(this.availableDrops); // Update UI
-
         // Clear existing timer and start a new one
         clearTimeout(this.cooldownTimer);
         this.cooldownTimer = setTimeout(() => {
@@ -57,10 +60,7 @@ class CoinPipeManager {
             }, 500); // Increment drop every 0.5 seconds
         }
     }
-    consumeCookie() {
-        this.game.cookieCount -= 1; // Deduct one cookie
-        this.game.uiManager.updateCookieCounter(this.game.cookieCount); // Update UI
-    }
+ 
     resetDrops() {
         this.availableDrops = this.maxDrops;
         this.game.uiManager.updateDropCounter(this.availableDrops); // Update UI

@@ -1,7 +1,7 @@
 import { Objects } from '../Components/Objects.js';
 
 class DropManager {
-    constructor(scene, materialManager, platformImpostor, game) {
+    constructor(scene, materialManager, platformImpostor, game, pusher) {
         this.scene = scene;
         this.game = game;
         this.materialManager = materialManager;
@@ -9,6 +9,7 @@ class DropManager {
         this.scaleFactor = 2; // Define scaleFactor as a class propertys
         //  this.loadMonkeyModel(); // Load the model when the class is instantiated
         this.platformImpostor = platformImpostor; // Add this line
+        this.pusher = pusher;
         this.objects = new Objects(this.scene, this.materialManager, this.game);
 
     }
@@ -46,20 +47,34 @@ class DropManager {
         }
     }
 
-    dropCookie(playerDropped) {
-        const cookie = this.objects.createCookie(playerDropped);
-
-        return cookie;
-   
+    dropCookie(playerDropped, dropPos) {
+     //   console.log('drop cookie at : ',dropPos)
+        const cookie = this.objects.createCookie(playerDropped, dropPos, this.platformImpostor, this.pusher);
+        
+        if (!this.droppingCookies) {
+            this.droppingCookies = true; // Set the flag to prevent multiple invocations
+          
+            // Ensure the flag is reset when the promise is resolved
+            cookie.then((result) => {
+                this.droppingCookies = false;
+                // Handle the result or any other logic here
+            }).catch((error) => {
+                // Handle errors gracefully
+                console.error(error);
+                this.droppingCookies = false; // Ensure the flag is reset in case of errors
+            });
+            return cookie;
+        }
     }
 
     dropDonut() {
         const donut = this.objects.createDonut();
-        //const donut = this.objects.createCupcake();
         return donut;
-   
     }
-
+    dropCupcake() {
+        const cupcake = this.objects.createCupcake();
+        return cupcake;
+    }
 }
 
 export { DropManager };

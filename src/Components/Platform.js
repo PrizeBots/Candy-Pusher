@@ -3,26 +3,31 @@ export class Platform {
     constructor(scene, materialManager) {
         this.scene = scene;
         this.materialManager = materialManager;
+        this.wallDownPosition = -18;
+        this.wallUpPosition = 10;
+        this.leftWall = null;
+        this.rightWall = null;
+        this.create();
     }
 
     create() {
         // Create main platform
-        const mainPlatformSize = { width: 50, height: 2, depth: 100 };
+        const mainPlatformSize = { width: 40, height: 2, depth: 100 };
         const mainPlatform = BABYLON.MeshBuilder.CreateBox("mainPlatform", mainPlatformSize, this.scene);
         mainPlatform.position.y = -1;
         mainPlatform.position.z = 20;
-        mainPlatform.material = this.materialManager.getMaterial("platformMaterial");
+        mainPlatform.material = this.materialManager.getMaterial("collisionBoxMaterial");
         // Add physics impostor to the main platform
         mainPlatform.physicsImpostor = new BABYLON.PhysicsImpostor(
             mainPlatform,
             BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 0.1,friction: .01 },
+            { mass: 0, restitution: 0, friction: 0.1 },
             this.scene
         );
 
         // Create pusher pit
-        const sideSlopeWidth = 5;
-        const sideSlopeHeight = 30;
+        const sideSlopeWidth = 3;
+        const sideSlopeHeight = 90;
         const sideSlopeDepth = 70;
         const slopeAngle = 10;
         const backSlope = BABYLON.MeshBuilder.CreateBox("backSlope", {
@@ -65,15 +70,31 @@ export class Platform {
         //Walls
         const wallHeight = 30;
         const wallDepth = 20;
-        const wallWidth =6;
-        const rightWall = this.createWall({
+        const wallWidth = 3;
+        const goalBackboard = this.createWall({
+            width: wallWidth,
+            height: wallHeight * 2,
+            depth: wallDepth * 3,
+            position: {
+                x: 0,
+                y: -20,
+                z: 110
+            },
+            rotation: {
+                x: 0,
+                y: 300,
+                z: 0
+            }
+        });
+        goalBackboard.isVisible = false;
+        const rightSlantWall = this.createWall({
             width: wallWidth,
             height: wallHeight,
             depth: wallDepth,
             position: {
                 x: -27,
                 y: -5,
-                z:25
+                z: 25
             },
             rotation: {
                 x: .1,
@@ -82,7 +103,7 @@ export class Platform {
             }
         });
         // Create right wall
-        const leftWall = this.createWall({
+        const leftSlantWall = this.createWall({
             width: wallWidth,
             height: wallHeight,
             depth: wallDepth,
@@ -97,37 +118,77 @@ export class Platform {
                 z: -Math.PI / slopeAngle
             }
         });
-        const rightWall2 = this.createWall({
+
+        //Wall Up Walls
+        const rightWall = this.createWall({
             width: wallWidth,
-            height: wallHeight/2,
-            depth: wallDepth,
+            height: wallHeight / 2,
+            depth: wallDepth * 2,
             position: {
-                x: -25,
-                y: -15,
-                z: 80
+                x: -23,
+                y: this.wallDownPosition,
+                z: 50
             },
-         
+
+        });
+        this.rightWall = rightWall;
+        // Create right wall
+        const leftWall = this.createWall({
+            width: wallWidth,
+            height: wallHeight / 2,
+            depth: wallDepth * 2,
+            position: {
+                x: 23,
+                y: this.wallDownPosition,
+                z: 50
+            },
+        });
+        this.leftWall = leftWall;
+
+        //Goal Walls
+        const rightGoalWall = this.createWall({
+            width: wallWidth,
+            height: wallHeight / 2,
+            depth: wallDepth * 2,
+            position: {
+                x: -23,
+                y: -15,
+                z: 90
+            },
         });
         // Create right wall
-        const leftWall2 = this.createWall({
+        const leftGoalWall = this.createWall({
             width: wallWidth,
-            height: wallHeight/2,
-            depth: wallDepth,
+            height: wallHeight / 2,
+            depth: wallDepth * 2,
             position: {
-                x: 25,
+                x: 23,
                 y: -15,
-                z: 80
+                z: 90
             },
-      
         });
-   
+        const centerGoalWall = this.createWall({
+            width: wallWidth,
+            height: wallHeight / 2,
+            depth: wallDepth * 2,
+            position: {
+                x: 0,
+                y: -18,
+                z: 65
+            },
+            rotation: {
+                x: 0,
+                y: 300,
+                z: 0
+            }
+        });
         // Parent the walls to the main platform for easy manipulation as a single entity
-        mainPlatform.addChild(leftWall);
-        mainPlatform.addChild(rightWall);
+        mainPlatform.addChild(goalBackboard);
+        // mainPlatform.addChild(leftWall);
+        // mainPlatform.addChild(rightWall);
         mainPlatform.addChild(backSlope);
         mainPlatform.addChild(leftSlope);
         mainPlatform.addChild(rightSlope);
-
         return mainPlatform;
     }
     createWall(options) {
@@ -145,15 +206,20 @@ export class Platform {
             wall.rotation.y = options.rotation.y || 0;
             wall.rotation.z = options.rotation.z || 0;
         }
-        wall.material = this.materialManager.getMaterial("wallMaterial");
-
+        wall.material = this.materialManager.getMaterial("collisionBoxMaterial");
         wall.physicsImpostor = new BABYLON.PhysicsImpostor(
             wall,
             BABYLON.PhysicsImpostor.BoxImpostor,
-     
+
             { mass: 0, restitution: 0.1, friction: 0.1 }
         );
-
         return wall;
+    }
+    raiseWalls() {
+        this.leftWall.position.y += 5;
+        this.rightWall.position.y += 5;
+
+        this.leftWall.isVisible=false;
+        this.rightWall.isVisible=false;
     }
 }

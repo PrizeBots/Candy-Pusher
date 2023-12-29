@@ -1,50 +1,70 @@
 class LevelManager {
-    constructor(scene, gameInstance) {
+    constructor(scene, game) {
         this.scene = scene;
-        this.game = gameInstance;
+        this.game = game;
         this.level = 1;
     }
 
-    levelSystem() {
-        var numRows = 3;
-        var numColumns = 4;
-        const cookieSpacing = 6; // Adjust this value to set the spacing between cookies
-        var initialX = -numColumns / 2 * cookieSpacing + 3;
-        var initialZ = 18; // Adjust the initial Z position if needed
+    levelSystem(callback) {
+        for (let i = 0; i < 2; i++) {
+            const numRows = 1;
+            const numColumns = 3;
+            const cookieSpacing = 7.8;
+            const initialX = -numColumns / 2 * cookieSpacing + 3.5;
+            const initialZ = 22;
+            const initialY = 40;
+            const cookies = [];
 
-        // Create Level 1 - a 3x4 grid of cookies without deducting from player's cookie count
-        for (let row = 0; row < numRows; row++) {
-            for (let col = 0; col < numColumns; col++) {
-                const cookie = this.game.dropManager.dropCookie(false); // Create a cookie without decrementing cookie count
+            const createCookiesForRow = (row, col) => {
                 const xOffset = initialX + col * cookieSpacing;
                 const zOffset = initialZ + row * cookieSpacing;
-                cookie.position.x = xOffset;
-                cookie.position.y = 20;
-                cookie.position.z = zOffset;
-            }
-        }
+                const dropPos = new BABYLON.Vector3(xOffset, initialY, zOffset);
+                // console.log('make level 1 cookie', dropPos);
+                const cookie = this.game.dropManager.dropCookie(false, dropPos);
+                if (cookie) {
+                    cookie.rotation = BABYLON.Vector3.Zero();
+                    cookies.push(cookie);
+                }
+                if (row < numRows - 1 || col < numColumns - 1) {
+                    if (col < numColumns - 1) {
+                        createCookiesForRow(row, col + 1); // Create the next cookie in the same row
+                    } else {
+                        createCookiesForRow(row + 1, 0); // Create the first cookie in the next row
+                    }
+                } else {
+                    // When the first grid is complete, create the second grid
+                    const secondGridRows = 5;
+                    const secondGridColumns = 5;
+                    const secondGridSpacing = 8.8;
+                    const secondGridInitialX = -secondGridColumns / 2 * secondGridSpacing + 3.5;
+                    const secondGridInitialZ = 32;
 
-        // Reset numRows, numColumns, and initial positions for the next part of the level
-        numRows = 6;
-        numColumns = 7;
-        initialX = -numColumns / 2 * cookieSpacing + 3;
-        initialZ = 38; // Adjust the initial Z position if needed
+                    const createSecondGridCookiesForRow = (secondRow, secondCol) => {
+                        const secondXOffset = secondGridInitialX + secondCol * secondGridSpacing;
+                        const secondZOffset = secondGridInitialZ + secondRow * secondGridSpacing;
+                        const secondDropPos = new BABYLON.Vector3(secondXOffset, initialY, secondZOffset);
+                        // console.log('make level 2 cookie', secondDropPos);
+                        const secondCookie = this.game.dropManager.dropCookie(false, secondDropPos);
+                        if (secondCookie) {
+                            secondCookie.rotation = BABYLON.Vector3.Zero();
+                            cookies.push(secondCookie);
+                        }
+                        if (secondRow < secondGridRows - 1 || secondCol < secondGridColumns - 1) {
+                            if (secondCol < secondGridColumns - 1) {
+                                createSecondGridCookiesForRow(secondRow, secondCol + 1); // Create the next cookie in the same row
+                            } else {
+                                createSecondGridCookiesForRow(secondRow + 1, 0); // Create the first cookie in the next row
+                            }
+                        } else {
+                            callback(cookies); // Invoke the callback when all cookies are created
+                        }
+                    };
+                    createSecondGridCookiesForRow(0, 0); // Start creating cookies for the second grid
+                }
+            };
 
-        // Create the rest of Level 1 - a 6x7 grid of cookies without deducting from player's cookie count
-        for (let row = 0; row < numRows; row++) {
-            for (let col = 0; col < numColumns; col++) {
-                const cookie = this.game.dropManager.dropCookie(false); // Create a cookie without decrementing cookie count
-                const xOffset = initialX + col * cookieSpacing;
-                const zOffset = initialZ + row * cookieSpacing;
-                cookie.position.x = xOffset;
-                cookie.position.y = 20;
-                cookie.position.z = zOffset;
-            }
+            createCookiesForRow(0, 0); // Start creating cookies for the first grid
         }
-        
-        // Set the player's initial cookie count to 100
-        this.game.uiManager.cookieCount = 100;
     }
 }
-
 export { LevelManager };

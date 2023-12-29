@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1, user-scalable=no">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/style.css">
-    <title>Game Time!</title>
+    <title>Sugar Pusher</title>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
     <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
@@ -16,18 +16,22 @@
 
 <body>
     <canvas id="renderCanvas" width="1031" height="580"></canvas>
-
     <button id="startButton">Start Game</button>
-
-    <button id="dropCoinButton">Drop Coin</button>
+    <!-- Controls -->
+    <button id="makeCookieButton">Make Cookie</button>
+    <button id="dropCookieButton">Drop Cookie</button>
+    <!-- Buttons -->
     <button id="wallButton">Wall Up</button>
-    <button id="dropDonutButton">Drop Donut</button>
-    <button id="dropTreasure">Drop Treasure</button>
-    <button id="dropCookies">Drop Cookies</button>
     <button id="bigPush">Big Push!</button>
-    <div id="coinCount">Cookies: 100</div>
+    <button id="dropDonutButton">Drop Donut</button>
+    <button id="dropCupcakeButton">Drop Cupcake</button>
+    <button id="toggleCameraLockButton">Cam Lock</button>
+    <!-- Labels -->
+    <div id="coinCount">Cookies: 0</div>
+    <div id="cupcakeCount">Cupcakes: 0</div>
+    <div id="donutCount">Donuts: 0</div>
     <div id="prizePool">Prize Pool: 0</div>
-
+    <div id="scoreCount">Score: 0</div>
     <!-- Import Game.js as a module -->
     <script type="module" src="src/Game.js"></script>
 </body>

@@ -1,19 +1,20 @@
 import { Platform } from '../Components/Platform.js';
+import { Goal } from '../Components/Goal.js';
 class GameObjectManager {
     constructor(scene, materialManager, game) {
         this.scene = scene;
         this.game = game;
         this.materialManager = materialManager;
+        this.goal = new Goal(game);
         this.pusher = null;
         this.pusherSpeed = 0.25;
         this.pusherDirection = 1;
-        this.pusherLimitFront = -10;
+        this.pusherLimitFront = -5;
         this.pusherLimitBack = -40;
     }
-
     createCapturePlane() {
-        const capturePlane = BABYLON.MeshBuilder.CreateGround("capturePlane", { width: 100, height: 40, depth: 0 }, this.scene);
-        capturePlane.position.y = -10;
+        const capturePlane = BABYLON.MeshBuilder.CreateGround("capturePlane", { width: 200, height: 200, depth: 0 }, this.scene);
+        capturePlane.position.y = -50;
         capturePlane.position.z = 48;
         capturePlane.isVisible = true;
         capturePlane.physicsImpostor = new BABYLON.PhysicsImpostor(
@@ -25,17 +26,16 @@ class GameObjectManager {
         capturePlane.physicsImpostor.registerOnPhysicsCollide(this.scene.getPhysicsEngine().getImpostors(), (main, collided) => {
             collided.object.dispose();
             console.log("capturePlane");
-            
-
         });
+        capturePlane.isVisible = false;
         return capturePlane;
     }
-
+  
     createGoalPlane() {
-        const goalPlane = BABYLON.MeshBuilder.CreateGround("goalPlane", { width: 40, height: 30, depth: 0 }, this.scene);
+        const goalPlane = BABYLON.MeshBuilder.CreateGround("goalPlane", { width: 40, height: 50, depth: 0 }, this.scene);
         goalPlane.position.y = -20;
-        goalPlane.position.z = 80;
-        goalPlane.isVisible = true;
+        goalPlane.position.z = 90;
+        goalPlane.isVisible = false;
         goalPlane.physicsImpostor = new BABYLON.PhysicsImpostor(
             goalPlane,
             BABYLON.PhysicsImpostor.BoxImpostor,
@@ -43,11 +43,8 @@ class GameObjectManager {
             this.scene
         );
         goalPlane.physicsImpostor.registerOnPhysicsCollide(this.scene.getPhysicsEngine().getImpostors(), (main, collided) => {
-            if (collided.object.name === "cookie") {
-                this.game.getSound.play(); // Now 'this.game' should be defined
-                collided.object.dispose(); // Remove the cookie
-                this.game.uiManager.incrementCookieCount(); // Call the method on the UIManager instance
-            }
+            this.goal.checkGoal(collided.object);
+           
         });
         return goalPlane;
     }
@@ -56,8 +53,22 @@ class GameObjectManager {
         const customPlatform = platformCreator.create();
         return customPlatform;
     }
+    loadPlatformModel(){
+        BABYLON.SceneLoader.ImportMesh("", "assets/", "gamePlatform.glb", this.scene, (meshes) => {
+            if (meshes.length > 0) {
+                const gamePlatform = meshes[0];
+                gamePlatform.name = "gamePlatform";
+                gamePlatform.position = new BABYLON.Vector3(0, 9, 0); // Set initial position
+                gamePlatform.rotation = BABYLON.Vector3.Zero();
+                // Set pivot point to the center of the donut
+                gamePlatform.setPivotMatrix(BABYLON.Matrix.Translation(0, -gamePlatform.scaling.y, 0));
+              //  gamePlatform.scaling = new BABYLON.Vector3(10, 10, 10);
+               
+            }
+        });
+    }
     createPusher() {
-        const pusherSize = { width: 40, height: 5, depth: 50 };
+        const pusherSize = { width: 40, height: 10, depth: 50 };
         const pusher = BABYLON.MeshBuilder.CreateBox("pusher", pusherSize, this.scene);
         pusher.position.y = 1;
         pusher.position.z = -25;
@@ -65,7 +76,7 @@ class GameObjectManager {
         pusher.physicsImpostor = new BABYLON.PhysicsImpostor(
             pusher,
             BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 0, friction: .5, kinematic: true },
+            { mass: 0, restitution: 0, friction: 1, kinematic: true },
             this.scene
         );
         this.pusher = pusher;
