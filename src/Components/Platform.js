@@ -1,8 +1,9 @@
 // Platform.js
 export class Platform {
-    constructor(scene, materialManager) {
+    constructor(scene, materialManager,game) {
         this.scene = scene;
         this.materialManager = materialManager;
+        this.game = game;
         this.wallDownPosition = -15;
         this.wallUpPosition = 7;
         this.wallSpeed = 0.05;
@@ -11,6 +12,7 @@ export class Platform {
         this.wallsUp = false;
         this.wallsDown = false;
         this.wallTime = 20000;
+        this.wallMoving = false;
         this.create();
     }
 
@@ -25,7 +27,7 @@ export class Platform {
         mainPlatform.physicsImpostor = new BABYLON.PhysicsImpostor(
             mainPlatform,
             BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 0, friction: 0.1 },
+            { mass: 0, restitution: 0, friction: 0.05 },
             this.scene
         );
 
@@ -66,7 +68,7 @@ export class Platform {
         leftSlope.rotation.z = -Math.PI / slopeAngle; // -45-degree rotation for the slope
 
         // Add physics impostors to the slopes
-        const slopesPhysicsOptions = { mass: 0, restitution: 0.1, friction: 0.1 };
+        const slopesPhysicsOptions = { mass: 0, restitution: 0.1, friction: 0 };
         leftSlope.physicsImpostor = new BABYLON.PhysicsImpostor(leftSlope, BABYLON.PhysicsImpostor.BoxImpostor, slopesPhysicsOptions, this.scene);
         rightSlope.physicsImpostor = new BABYLON.PhysicsImpostor(rightSlope, BABYLON.PhysicsImpostor.BoxImpostor, slopesPhysicsOptions, this.scene);
         backSlope.physicsImpostor = new BABYLON.PhysicsImpostor(backSlope, BABYLON.PhysicsImpostor.BoxImpostor, slopesPhysicsOptions, this.scene);
@@ -224,9 +226,14 @@ export class Platform {
         if (this.leftWall.position.y < this.wallUpPosition) {
             this.leftWall.position.y += this.wallSpeed;
             this.rightWall.position.y += this.wallSpeed;
+            this.wallMoving = true;
         } else {
             this.leftWall.position.y = this.wallUpPosition;
             this.rightWall.position.y = this.wallUpPosition;
+            if(this.wallMoving){
+                this.game.wallMoveFinishSound.play();
+                this.wallMoving=false;
+            }
             this.wallTimer = setTimeout(() => {
                 this.wallsUp = false;
                 this.wallsDown = true;
@@ -234,9 +241,14 @@ export class Platform {
         }
     }
     lowerWalls() {
+        if(!this.wallMoving){
+            this.wallMoving = true;
+            this.game.wallMoveSound.play();
+        }
         if (this.leftWall.position.y > this.wallDownPosition) {
             this.leftWall.position.y -= this.wallSpeed;
             this.rightWall.position.y -= this.wallSpeed;
+
         } else {
             this.leftWall.position.y = this.wallDownPosition;
             this.rightWall.position.y = this.wallDownPosition;

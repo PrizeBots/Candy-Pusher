@@ -54,9 +54,17 @@ html, body {
     justify-content: center;
 }
 /* Drop and Score */
+#sugarCounter {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 20px;
+}
 #scoreCounter {
     position: absolute;
-    top: 110px;
+    top: 170px;
     left: 50%;
     transform: translateX(-50%);
     color: white;
@@ -64,7 +72,7 @@ html, body {
 }
 #dropCounter {
     position: absolute;
-    top: 140px;
+    top: 220px;
     left: 50%;
     transform: translateX(-50%);
     color: white;
@@ -128,27 +136,27 @@ html, body {
     align-items: center;
     justify-content: center;
 }
-#dropDonutButton {
-    position: absolute;
-    bottom: 20px;
-    bottom: 25%;
-    right: 5%;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: red;
-    color: rgb(0, 0, 0);
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 #dropCupcakeButton {
     position: absolute;
     bottom: 20px;
-    bottom: 15%;
+    bottom: 30%;
+    left: 5%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: red;
+    color: rgb(0, 0, 0);
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#dropDonutButton {
+    position: absolute;
+    bottom: 20px;
+    bottom: 30%;
     right: 5%;
     width: 50px;
     height: 50px;
@@ -162,11 +170,79 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+#dropPieButton {
+    position: absolute;
+    bottom: 20px;
+    bottom: 20%;
+    left: 5%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: red;
+    color: rgb(0, 0, 0);
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#dropChocolateBarButton {
+    position: absolute;
+    bottom: 20px;
+    bottom: 20%;
+    right: 5%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: red;
+    color: rgb(0, 0, 0);
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#dropColaButton {
+    position: absolute;
+    bottom: 20px;
+    bottom: 10%;
+    left: 5%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: red;
+    color: rgb(0, 0, 0);
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+#dropCakeButton {
+    position: absolute;
+    bottom: 20px;
+    bottom: 10%;
+    right: 5%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: red;
+    color: rgb(0, 0, 0);
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+
 #toggleCameraLockButton {
     position: absolute;
     bottom: 20px;
-    bottom: 5%;
-    right: 5%;
+    bottom: 1%;
+    right: 1%;
     width: 50px;
     height: 50px;
     border-radius: 50%;

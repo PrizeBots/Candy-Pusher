@@ -5,6 +5,16 @@ class SoundManager {
         this.initSound();
     }
     initSound() {
+        this.game.wallMoveSound = new BABYLON.Sound("wallMove", "../assets/sound/wallMove.mp3", this.scene, {
+            autoplay: false,
+            volume: 1,
+            loop: false
+        });
+        this.game.wallMoveFinishSound = new BABYLON.Sound("wallMoveFinish", "../assets/sound/wallMoveFinish.mp3", this.scene, {
+            autoplay: false,
+            volume: 1,
+            loop: false
+        });
         this.game.clickSound = new BABYLON.Sound("click", "../assets/sound/click.mp3", this.scene, {
             autoplay: false,
             volume: 1,

@@ -14,9 +14,8 @@ class GameObjectManager {
     }
     createCapturePlane() {
         const capturePlane = BABYLON.MeshBuilder.CreateGround("capturePlane", { width: 200, height: 200, depth: 0 }, this.scene);
-        capturePlane.position.y = -50;
+        capturePlane.position.y = -55;
         capturePlane.position.z = 48;
-        capturePlane.isVisible = true;
         capturePlane.physicsImpostor = new BABYLON.PhysicsImpostor(
             capturePlane,
             BABYLON.PhysicsImpostor.BoxImpostor,
@@ -27,13 +26,13 @@ class GameObjectManager {
             collided.object.dispose();
             console.log("capturePlane");
         });
-        capturePlane.isVisible = false;
+       capturePlane.isVisible = false;
         return capturePlane;
     }
   
     createGoalPlane() {
         const goalPlane = BABYLON.MeshBuilder.CreateGround("goalPlane", { width: 40, height: 50, depth: 0 }, this.scene);
-        goalPlane.position.y = -20;
+        goalPlane.position.y = -45;
         goalPlane.position.z = 90;
         goalPlane.isVisible = false;
         goalPlane.physicsImpostor = new BABYLON.PhysicsImpostor(
@@ -48,11 +47,7 @@ class GameObjectManager {
         });
         return goalPlane;
     }
-    createPlatform() {
-        const platformCreator = new Platform(this.scene, this.materialManager);
-        const customPlatform = platformCreator.create();
-        return customPlatform;
-    }
+   
     loadPlatformModel(){
         BABYLON.SceneLoader.ImportMesh("", "assets/", "gamePlatform.glb", this.scene, (meshes) => {
             if (meshes.length > 0) {

@@ -75,6 +75,10 @@ class DropManager {
         const cupcake = this.objects.createCupcake();
         return cupcake;
     }
+    dropChocolateBar(){
+        const chocolateBar = this.objects.createChocolateBar();
+        return chocolateBar;
+    }
 }
 
 export { DropManager };

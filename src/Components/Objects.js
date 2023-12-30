@@ -138,5 +138,29 @@ class Objects {
             }
         });
     }
+    createChocolateBar() {
+        BABYLON.SceneLoader.ImportMesh("", "assets/", "chocolateBar.glb", this.scene, (meshes) => {
+            if (meshes.length > 0) {
+                const chocolateBar = meshes[0];
+                chocolateBar.name = "chocolateBar";
+                chocolateBar.position = new BABYLON.Vector3(0, 13, 0);
+                chocolateBar.rotation = BABYLON.Vector3.Zero();
+                chocolateBar.setPivotMatrix(BABYLON.Matrix.Translation(0, -chocolateBar.scaling.y, 0));
+                chocolateBar.scaling = new BABYLON.Vector3(10, 10, 10);
+                const cylinder = BABYLON.MeshBuilder.CreateCylinder("chocolateBarCylinder", {
+                    height: 10,
+                    diameterTop: chocolateBar.scaling.x * 1.3,
+                    diameterBottom: chocolateBar.scaling.x * .8,
+                    tessellation: 12,
+                }, this.scene);
+                cylinder.position = new BABYLON.Vector3(0, 40, 0);
+                chocolateBar.parent = cylinder;
+                cylinder.physicsImpostor = new BABYLON.PhysicsImpostor(cylinder, BABYLON.PhysicsImpostor.CylinderImpostor, {
+                    mass: 2, restitution: 0.1, friction: 0.1
+                }, this.scene);
+                cylinder.isVisible = false;
+            }
+        });
+    }
 }
 export { Objects };

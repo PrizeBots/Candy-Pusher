@@ -28,8 +28,8 @@ class SceneManager {
         }
     }
     _setupLighting() {
-        var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), this.scene);
-        light.intensity = 0.7;
+        var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, .9, 0), this.scene);
+        light.intensity = 0.85;
     }
     _setupCamera() {
         var camera = new BABYLON.ArcRotateCamera(

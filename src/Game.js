@@ -28,6 +28,7 @@ class Game {
         this.cupcakeCount = 0;
         this.donutCount = 0;
         this.score = 0;
+        this.sugar = 0;
         this.wallTokens = 100;
         this.wallsUp = false;
         this.wallsDown = false;
@@ -40,7 +41,7 @@ class Game {
         this.SoundManager = new SoundManager(this);
         this.materialManager = new MaterialManager(this.scene);
         this.gameObjectManager = new GameObjectManager(this.scene, this.materialManager, this)
-        this.platform = new Platform(this.scene, this.materialManager);
+        this.platform = new Platform(this.scene, this.materialManager, this);
         const platform = this.platform.create();
         const platformImpostor = platform.physicsImpostor;
 
@@ -140,7 +141,8 @@ class Game {
                 if (this.wallTokens > 0 && !this.platform.wallsUp && !this.platform.wallsDown) {
                     this.wallTokens--;
                     this.platform.wallsUp = true;
-                    this.platform.raiseWalls();
+                    /// this.platform.raiseWalls();
+                    this.wallMoveSound.play();
                 }
                 console.log('this.platform.wallsUp ', this.platform.wallsUp, ' !this.platform.wallsDown ', this.platform.wallsDown)
 

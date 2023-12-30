@@ -2,13 +2,18 @@
 class UIManager {
     constructor(game) {
         this.game = game;
+
+        this.sugarCounterElement = document.createElement('div');
+        this.sugarCounterElement.id = 'sugarCounter';
+        // 
+        this.scoreCounterElement = document.createElement('div');
+        this.scoreCounterElement.id = 'scoreCounter';
         // Create and append drop counter element
         this.dropCounterElement = document.createElement('div');
         this.dropCounterElement.id = 'dropCounter';
         document.body.appendChild(this.dropCounterElement);
-        // Create and append drop counter element
-        this.scoreCounterElement = document.createElement('div');
-        this.scoreCounterElement.id = 'scoreCounter';
+        document.body.appendChild(this.sugarCounterElement);
+
         document.body.appendChild(this.scoreCounterElement);
         // Create and append cookie counter element
         this.cookieCounterElement = document.createElement('div');
@@ -24,11 +29,14 @@ class UIManager {
         document.body.appendChild(this.donutCounterElement);
         // Initialize UI
         this.updateScore();
-
+        this.updateSugarCounter();
         this.updateDropCounter(6);
         this.updateCookieCounter(this.game.cookieCount);
         this.updateCupcakeCounter(this.game.cupcakeCount);
         this.updateDonutCounter(this.game.donutCount);
+    }
+    updateSugarCounter() {
+        this.sugarCounterElement.textContent = `Sugar: ${this.game.sugar}`;
     }
     updateScore() {
         console.log("updateScore ", this.game.score);
