@@ -3,10 +3,14 @@ export class Platform {
     constructor(scene, materialManager) {
         this.scene = scene;
         this.materialManager = materialManager;
-        this.wallDownPosition = -18;
-        this.wallUpPosition = 10;
-        this.leftWall = null;
-        this.rightWall = null;
+        this.wallDownPosition = -15;
+        this.wallUpPosition = 7;
+        this.wallSpeed = 0.05;
+        this.wallDirection = 1;
+        this.wallTimer = null;
+        this.wallsUp = false;
+        this.wallsDown = false;
+        this.wallTime = 20000;
         this.create();
     }
 
@@ -120,30 +124,31 @@ export class Platform {
         });
 
         //Wall Up Walls
-        const rightWall = this.createWall({
+        this.rightWall = this.createWall({
             width: wallWidth,
             height: wallHeight / 2,
             depth: wallDepth * 2,
             position: {
-                x: -23,
+                x: -22,
                 y: this.wallDownPosition,
-                z: 50
+                z: 47
             },
 
         });
-        this.rightWall = rightWall;
+
         // Create right wall
-        const leftWall = this.createWall({
+        this.leftWall = this.createWall({
             width: wallWidth,
             height: wallHeight / 2,
             depth: wallDepth * 2,
             position: {
-                x: 23,
+                x: 22,
                 y: this.wallDownPosition,
-                z: 50
+                z: 47
             },
         });
-        this.leftWall = leftWall;
+        this.leftWall.mass = 1;
+        this.rightWall.mass = 2;
 
         //Goal Walls
         const rightGoalWall = this.createWall({
@@ -211,15 +216,31 @@ export class Platform {
             wall,
             BABYLON.PhysicsImpostor.BoxImpostor,
 
-            { mass: 0, restitution: 0.1, friction: 0.1 }
+            { mass: 0, restitution: 0.1, friction: 0 }
         );
         return wall;
     }
     raiseWalls() {
-        this.leftWall.position.y += 5;
-        this.rightWall.position.y += 5;
-
-        this.leftWall.isVisible=false;
-        this.rightWall.isVisible=false;
+        if (this.leftWall.position.y < this.wallUpPosition) {
+            this.leftWall.position.y += this.wallSpeed;
+            this.rightWall.position.y += this.wallSpeed;
+        } else {
+            this.leftWall.position.y = this.wallUpPosition;
+            this.rightWall.position.y = this.wallUpPosition;
+            this.wallTimer = setTimeout(() => {
+                this.wallsUp = false;
+                this.wallsDown = true;
+            }, this.wallTime);
+        }
+    }
+    lowerWalls() {
+        if (this.leftWall.position.y > this.wallDownPosition) {
+            this.leftWall.position.y -= this.wallSpeed;
+            this.rightWall.position.y -= this.wallSpeed;
+        } else {
+            this.leftWall.position.y = this.wallDownPosition;
+            this.rightWall.position.y = this.wallDownPosition;
+            this.wallsDown = false;
+        }
     }
 }

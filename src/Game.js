@@ -28,6 +28,9 @@ class Game {
         this.cupcakeCount = 0;
         this.donutCount = 0;
         this.score = 0;
+        this.wallTokens = 100;
+        this.wallsUp = false;
+        this.wallsDown = false;
         this.sceneManager = new SceneManager(this.engine, this.canvas);
         this.scene = this.sceneManager.getScene();
         this.uiManager = new UIManager(this);
@@ -46,7 +49,7 @@ class Game {
 
         this.gameObjectManager.createGoalPlane();
         this.gameObjectManager.createCapturePlane();
-        this.gameObjectManager. loadPlatformModel();
+        this.gameObjectManager.loadPlatformModel();
         this.dropManager = new DropManager(this.scene, this.materialManager, platformImpostor, this, pusherImpostor);
         this.coinPipeManager = new CoinPipeManager(this.scene, this.materialManager, this.dropManager, this);
         // Start the game loop
@@ -72,6 +75,11 @@ class Game {
     }
     _startGameLoop() {
         this.engine.runRenderLoop(() => {
+            if (this.platform.wallsUp) {
+                this.platform.raiseWalls();
+            } else if (this.platform.wallsDown) {
+                this.platform.lowerWalls();
+            }
             this.gameObjectManager.updatePusher(); // Update the pusher's position
             this.coinPipeManager.updateCoinPipe(); // Update the coin pipe's position
             this.scene.render();
@@ -129,7 +137,13 @@ class Game {
         const wallButton = document.getElementById('wallButton');
         if (wallButton) {
             wallButton.addEventListener('click', () => {
-                this.platform.raiseWalls();
+                if (this.wallTokens > 0 && !this.platform.wallsUp && !this.platform.wallsDown) {
+                    this.wallTokens--;
+                    this.platform.wallsUp = true;
+                    this.platform.raiseWalls();
+                }
+                console.log('this.platform.wallsUp ', this.platform.wallsUp, ' !this.platform.wallsDown ', this.platform.wallsDown)
+
             });
         }
         const toggleCameraLockButton = document.getElementById('toggleCameraLockButton');

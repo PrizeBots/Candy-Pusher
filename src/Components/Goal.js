@@ -5,7 +5,8 @@ class Goal {
         //Bonus
         this.bonusWindowActive = false;
         this.bonusWindowTimer = null;
-        this.bonusCount = 0;
+        this.bonusCount = 1;
+        this.getTreat = false;
         this.init();
 
     }
@@ -15,35 +16,52 @@ class Goal {
         var objName = collidedObject.name;
         if (objName === "cookieCylinder") {
             this.handleBonusWindow();
-            this.game.getSound.play();
             this.game.score++;
             this.game.cookieCount++;
             this.game.uiManager.updateCookieCounter();
         } else if (objName === "cupcakeCylinder") {
-            console.log("goalPlane cupcake ", objName);
+           // console.log("goalPlane cupcake ", objName);
             this.game.cupcakeCount += 1;
-            this.game.getTreatSound.play();
-            this.game.score + 10;
+            this.getTreat = true;
+            this.game.score += 5;
             this.game.uiManager.updateCupcakeCounter();
         } else if (objName === "donutCylinder") {
-            console.log("goalPlane donut ", objName);
+          //  console.log("goalPlane donut ", objName);
             this.game.donutCount += 1;
-            this.game.getTreatSound.play();
-            this.game.score + 50;
+            this.getTreat = true;
+            this.game.score += 10;
             this.game.uiManager.updateDonutCounter();
         } else {
             console.log("goalPlane ?????s ", objName);
-            // this.game.getSound.play(); 
+
+        }
+        if (this.bonusCount === 1) {
+            this.game.get1Sound.play();
+        } else if (this.bonusCount === 2) {
+            this.game.get2Sound.play();
+        } else if (this.bonusCount === 3) {
+            this.game.get3Sound.play();
+        } else if (this.bonusCount === 4) {
+            this.game.get4Sound.play();
+        } else if (this.bonusCount === 5) {
+            this.game.get5Sound.play();
+        } else if (this.bonusCount === 6) {
+            this.game.get6Sound.play();
+        }
+        if (this.getTreat) {
+            this.getTreat = false;
+            this.game.getTreatSound.play();
         }
         collidedObject.dispose();
         this.game.uiManager.updateScore();
+      //  console.log("SCORE ", this.game.score);
     }
     handleBonusWindow() {
         console.log("handleBonusWindow");
         // If the bonus window is not active, start it
         if (!this.bonusWindowActive) {
             this.bonusWindowActive = true;
-            this.bonusCount = 0; // reset bonus count for the new window
+            this.bonusCount = 1; // reset bonus count for the new window
 
             // Set up a timer for the 3-second window
             this.bonusWindowTimer = setTimeout(() => {
