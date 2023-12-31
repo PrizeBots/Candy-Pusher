@@ -27,6 +27,9 @@ class UIManager {
         this.donutCounterElement = document.createElement('div');
         this.donutCounterElement.id = 'donutCounter';
         document.body.appendChild(this.donutCounterElement);
+        this.chocolateCounterElement = document.createElement('div');
+        this.chocolateCounterElement.id = 'chocolateCounter';
+        document.body.appendChild(this.chocolateCounterElement);
         // Initialize UI
         this.updateScore();
         this.updateSugarCounter();
@@ -34,6 +37,7 @@ class UIManager {
         this.updateCookieCounter(this.game.cookieCount);
         this.updateCupcakeCounter(this.game.cupcakeCount);
         this.updateDonutCounter(this.game.donutCount);
+        this.updateChocolateCounter(this.game.chocolateCount);
     }
     updateSugarCounter() {
         this.sugarCounterElement.textContent = `Sugar: ${this.game.sugar}`;
@@ -53,6 +57,9 @@ class UIManager {
     }
     updateDonutCounter() {
         this.donutCounterElement.textContent = `Donuts: ${this.game.donutCount}`;
+    }
+    updateChocolateCounter() {
+        this.chocolateCounterElement.textContent = `${this.game.chocolateCount}`;
     }
 }
 export { UIManager };

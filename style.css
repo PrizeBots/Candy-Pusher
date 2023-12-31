@@ -101,6 +101,7 @@ html, body {
     color: white;
     font-size: 20px;
 }
+
 /* Debug buttons */
 #wallButton {
     position: absolute;
@@ -187,6 +188,13 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+#pieCounter {
+    position: absolute;
+    bottom: 20%;
+    left: 5%;
+    color: white;
+    font-size: 20px;
+}
 #dropChocolateBarButton {
     position: absolute;
     bottom: 20px;
@@ -203,6 +211,13 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+#chocolateCounter {
+    position: absolute;
+    bottom: 25%;
+    right: 5%;
+    color: white;
+    font-size: 20px;
 }
 #dropColaButton {
     position: absolute;

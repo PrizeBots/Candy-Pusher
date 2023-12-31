@@ -79,6 +79,18 @@ class DropManager {
         const chocolateBar = this.objects.createChocolateBar();
         return chocolateBar;
     }
+    dropPie(){
+        const pie = this.objects.createPie();
+        return pie;
+    }
+    dropCola(){
+        const cola = this.objects.createCola();
+        return cola;
+    }
+    dropCake(){
+        const cake = this.objects.createCake();
+        return cake;
+    }
 }
 
 export { DropManager };

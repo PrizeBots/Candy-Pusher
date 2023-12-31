@@ -27,6 +27,7 @@ class Game {
         this.cookieCount = 50;
         this.cupcakeCount = 0;
         this.donutCount = 0;
+        this.chocolateCount = 0;
         this.score = 0;
         this.sugar = 0;
         this.wallTokens = 100;
@@ -135,17 +136,37 @@ class Game {
                 this.dropManager.dropCupcake();
             });
         }
+        const dropChocolateBarButton = document.getElementById('dropChocolateBarButton');
+        if (dropChocolateBarButton) {
+            dropChocolateBarButton.addEventListener('click', () => {
+                this.dropManager.dropChocolateBar();
+            });
+        }
+        const dropPieButton = document.getElementById('dropPieButton');
+        if (dropPieButton) {
+            dropPieButton.addEventListener('click', () => {
+                this.dropManager.dropPie();
+            });
+        }
+        ///Wall Up
         const wallButton = document.getElementById('wallButton');
         if (wallButton) {
             wallButton.addEventListener('click', () => {
-                if (this.wallTokens > 0 && !this.platform.wallsUp && !this.platform.wallsDown) {
-                    this.wallTokens--;
-                    this.platform.wallsUp = true;
-                    /// this.platform.raiseWalls();
-                    this.wallMoveSound.play();
-                }
-                console.log('this.platform.wallsUp ', this.platform.wallsUp, ' !this.platform.wallsDown ', this.platform.wallsDown)
+                // Check if the walls are already moving, and if so, return
+                // if (this.platform.isWallsMoving) {
+                //     return;
+                // }
 
+                // Trigger the wall movement directly
+                this.platform.raiseWallsWithTween();
+
+                // Play the wall move sound
+                //this.playWallMoveSound();
+
+                // Start the timer to lower the walls
+                setTimeout(() => {
+                    this.platform.lowerWallsWithTween();
+                }, 5000);
             });
         }
         const toggleCameraLockButton = document.getElementById('toggleCameraLockButton');

@@ -4,7 +4,13 @@ class LevelManager {
         this.game = game;
         this.level = 1;
     }
-
+    //Level 1: Sugar - Sweets
+    //Level 2: Air - Sports Balls
+    //Level 3: Fuel - Cars n Trucks
+    //Level 4: Protein - Food
+    //Level 5: Water - Sea Life
+    //Level 6: Juice - Fruit
+    //
     levelSystem(callback) {
         for (let i = 0; i < 2; i++) {
             const numRows = 1;

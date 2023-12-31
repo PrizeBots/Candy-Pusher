@@ -81,6 +81,26 @@ class SoundManager {
             volume: 1,
             loop: false
         });
+        this.game.get7Sound = new BABYLON.Sound("get7", "../assets/sound/get7.mp3", this.scene, {
+            autoplay: false,
+            volume: 1,
+            loop: false
+        });
+        this.game.get8Sound = new BABYLON.Sound("get8", "../assets/sound/get8.mp3", this.scene, {
+            autoplay: false,
+            volume: 1,
+            loop: false
+        });
+        this.game.get9Sound = new BABYLON.Sound("get9", "../assets/sound/get9.mp3", this.scene, {
+            autoplay: false,
+            volume: 1,
+            loop: false
+        });
+        this.game.get10Sound = new BABYLON.Sound("get10", "../assets/sound/get10.mp3", this.scene, {
+            autoplay: false,
+            volume: 1,
+            loop: false
+        });
     }
 }
 export { SoundManager };

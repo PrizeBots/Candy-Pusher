@@ -24,7 +24,6 @@ class GameObjectManager {
         );
         capturePlane.physicsImpostor.registerOnPhysicsCollide(this.scene.getPhysicsEngine().getImpostors(), (main, collided) => {
             collided.object.dispose();
-            console.log("capturePlane");
         });
        capturePlane.isVisible = false;
         return capturePlane;

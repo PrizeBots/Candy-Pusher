@@ -1,6 +1,8 @@
 // Platform.js
+
+
 export class Platform {
-    constructor(scene, materialManager,game) {
+    constructor(scene, materialManager, game) {
         this.scene = scene;
         this.materialManager = materialManager;
         this.game = game;
@@ -222,6 +224,80 @@ export class Platform {
         );
         return wall;
     }
+    raiseWallsWithTween() {
+        console.log('tweeening!!')
+        const raiseDuration = 1000; // Duration of the raise animation in milliseconds
+    
+        // Create animation keyframes for raising walls
+        const raiseAnimation = new BABYLON.Animation(
+            "raiseWallsAnimation",
+            "position.y",
+            30,
+            BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+            BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+        );
+    
+        // Define the keyframes
+        const raiseKeyframes = [
+            {
+                frame: 0,
+                value: this.leftWall.position.y // Starting position
+            },
+            {
+                frame: raiseDuration,
+                value: this.wallUpPosition // Ending position
+            }
+        ];
+    
+        // Set the animation keyframes
+        raiseAnimation.setKeys(raiseKeyframes);
+    
+        // Attach the animation to both walls
+        this.leftWall.animations.push(raiseAnimation);
+        this.rightWall.animations.push(raiseAnimation);
+    
+        // Play the animation
+        this.scene.beginAnimation(this.leftWall, 0, raiseDuration, false);
+        this.scene.beginAnimation(this.rightWall, 0, raiseDuration, false);
+    }
+    
+    lowerWallsWithTween() {
+        const lowerDuration = 1000; // Duration of the lower animation in milliseconds
+    
+        // Create animation keyframes for lowering walls
+        const lowerAnimation = new BABYLON.Animation(
+            "lowerWallsAnimation",
+            "position.y",
+            30,
+            BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+            BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+        );
+    
+        // Define the keyframes
+        const lowerKeyframes = [
+            {
+                frame: 0,
+                value: this.leftWall.position.y // Starting position
+            },
+            {
+                frame: lowerDuration,
+                value: this.wallDownPosition // Ending position
+            }
+        ];
+    
+        // Set the animation keyframes
+        lowerAnimation.setKeys(lowerKeyframes);
+    
+        // Attach the animation to both walls
+        this.leftWall.animations.push(lowerAnimation);
+        this.rightWall.animations.push(lowerAnimation);
+    
+        // Play the animation
+        this.scene.beginAnimation(this.leftWall, 0, lowerDuration, false);
+        this.scene.beginAnimation(this.rightWall, 0, lowerDuration, false);
+    }
+    
+    
     raiseWalls() {
         if (this.leftWall.position.y < this.wallUpPosition) {
             this.leftWall.position.y += this.wallSpeed;
@@ -230,9 +306,9 @@ export class Platform {
         } else {
             this.leftWall.position.y = this.wallUpPosition;
             this.rightWall.position.y = this.wallUpPosition;
-            if(this.wallMoving){
+            if (this.wallMoving) {
                 this.game.wallMoveFinishSound.play();
-                this.wallMoving=false;
+                this.wallMoving = false;
             }
             this.wallTimer = setTimeout(() => {
                 this.wallsUp = false;
@@ -241,7 +317,7 @@ export class Platform {
         }
     }
     lowerWalls() {
-        if(!this.wallMoving){
+        if (!this.wallMoving) {
             this.wallMoving = true;
             this.game.wallMoveSound.play();
         }
