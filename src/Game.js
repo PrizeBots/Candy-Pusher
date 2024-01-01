@@ -158,14 +158,14 @@ class Game {
                 // }
 
                 // Trigger the wall movement directly
-                this.platform.raiseWallsWithTween();
+                this.platform.walls.raiseWallsWithTween();
 
                 // Play the wall move sound
                 //this.playWallMoveSound();
 
                 // Start the timer to lower the walls
                 setTimeout(() => {
-                    this.platform.lowerWallsWithTween();
+                    this.platform.walls.lowerWallsWithTween();
                 }, 5000);
             });
         }
