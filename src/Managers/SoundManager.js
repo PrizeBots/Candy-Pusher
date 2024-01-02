@@ -5,7 +5,7 @@ class SoundManager {
         this.initSound();
     }
     initSound() {
-        this.game.wallMoveSound = new BABYLON.Sound("wallMove", "../assets/sound/wallMove.mp3", this.scene, {
+        this.game.wallMoveSound = new BABYLON.Sound("wallMove", "../../public/assets/sound/wallMove.mp3", this.scene, {
             autoplay: false,
             volume: 1,
             loop: false
@@ -20,7 +20,7 @@ class SoundManager {
             volume: 1,
             loop: false
         });
-        this.game.thudSound = new BABYLON.Sound("thud", "../assets/sound/thud.mp3", this.scene, {
+        this.game.thudSound = new BABYLON.Sound("thud", "../../public/assets//sound/thud.mp3", this.scene, {
             autoplay: false,
             volume: 1,
             loop: false

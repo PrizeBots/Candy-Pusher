@@ -39,8 +39,10 @@ class Objects {
         return new Promise(async (resolve) => {
             const cookie = await new Promise((innerResolve) => {
                 BABYLON.SceneLoader.ImportMesh("", "assets/", "sugarCookie.glb", this.scene, (meshes) => {
+               
                     //BABYLON.SceneLoader.ImportMesh("", "assets/", "chocolateChipCookie.glb", this.scene, (meshes) => {
                     if (meshes.length > 0) {
+                        console.log("OOKIE!");
                         const cookieMesh = meshes[0];
                         cookieMesh.name = "cookie";
                         cookieMesh.initialCollision = true;
@@ -161,6 +163,8 @@ class Objects {
             }
         });
     }
+    //add force for when treats land
+
     createPie() {
         BABYLON.SceneLoader.ImportMesh("", "assets/", "pie.glb", this.scene, (meshes) => {
             if (meshes.length > 0) {

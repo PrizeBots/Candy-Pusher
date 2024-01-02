@@ -5,14 +5,17 @@ class Walls {
         this.scene = scene;
         this.materialManager = materialManager;
         this.wallDownPosition = -15;
-        this.wallUpPosition = 7;
-        this.wallSpeed = 0.05;
+        this.wallUpPosition = 15;
+        this.wallSpeed = 0.18;
         this.wallDirection = 1;
         this.wallTimer = null;
         this.wallsUp = false;
-        this.wallsDown = false;
-        this.wallTime = 20000;
+        this.wallTime = 5000;
         this.wallMoving = false;
+        this.frameRate = 60;
+        this.DesignWalls();
+    }
+    DesignWalls() {
         //Walls
         const wallHeight = 30;
         const wallDepth = 20;
@@ -65,7 +68,6 @@ class Walls {
                 z: -Math.PI / slopeAngle
             }
         });
-
         //Wall Up Walls
         this.rightWall = this.createWall({
             width: wallWidth,
@@ -78,7 +80,6 @@ class Walls {
             },
 
         });
-
         // Create right wall
         this.leftWall = this.createWall({
             width: wallWidth,
@@ -92,7 +93,12 @@ class Walls {
         });
         this.leftWall.mass = 1;
         this.rightWall.mass = 2;
+        this.leftWallParent = new BABYLON.Mesh("leftWallParent", this.scene);
+        this.rightWallParent = new BABYLON.Mesh("rightWallParent", this.scene);
 
+        // Add wall meshes as children
+        this.leftWallParent.addChild(this.leftWall);
+        this.rightWallParent.addChild(this.rightWall);
         //Goal Walls
         const rightGoalWall = this.createWall({
             width: wallWidth,
@@ -130,7 +136,6 @@ class Walls {
                 z: 0
             }
         });
-
     }
     createWall(options) {
         const wall = BABYLON.MeshBuilder.CreateBox("wall", {
@@ -158,121 +163,92 @@ class Walls {
     }
     raiseWallsWithTween() {
         if (!this.wallsUp) {
-            console.log('walls up!')
-            const raiseDuration = 1000; // Duration of the raise animation in milliseconds
-
-            // Create animation keyframes for raising walls
+            console.log('walls up!');
             const raiseAnimation = new BABYLON.Animation(
-                "raiseWallsAnimation",
+                "raiseAnimation",
                 "position.y",
-                30,
+                this.frameRate,
                 BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-                BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+                BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT,
+                BABYLON.Animation.EASINGMODE_EASEINOUT,
+                this.wallRaised()
             );
-
-            // Define the keyframes
-            const raiseKeyframes = [
-                {
-                    frame: 0,
-                    value: this.leftWall.position.y
-                },
-                {
-                    frame: raiseDuration,
-                    value: this.wallUpPosition
-                }
-            ];
-
+            // raiseAnimation.onAnimationEnd = () => {
+            //     console.log('Left wall animation finished.');
+            //     this.wallRaised();
+            // };
+            const keyFrames = [];
+            keyFrames.push({
+                frame: 0,
+                value: 0 // Start at the current position
+            });
+            keyFrames.push({
+                frame: this.frameRate,
+                value: this.wallUpPosition
+            });
             // Set the animation keyframes
-            raiseAnimation.setKeys(raiseKeyframes);
-
-            // Attach the animation to both walls
-            this.leftWall.animations.push(raiseAnimation);
-            this.rightWall.animations.push(raiseAnimation);
-
+            raiseAnimation.setKeys(keyFrames);
+            // Attach the animation to both parent meshes
+            this.leftWallParent.animations.push(raiseAnimation);
+            this.rightWallParent.animations.push(raiseAnimation);
             // Play the animation
-            this.scene.beginAnimation(this.leftWall, 0, raiseDuration, false);
-            this.scene.beginAnimation(this.rightWall, 0, raiseDuration, false);
-
-            this.wallsUp = true;
-            this.wallsDown = false;
+            this.scene.beginAnimation(this.leftWallParent, 0, this.frameRate, false, this.wallSpeed);
+            this.scene.beginAnimation(this.rightWallParent, 0, this.frameRate, false, this.wallSpeed);
+            //Finish
+         
         }
+    }
+    wallRaised() {
+        console.log('Left wall animation finished.');
+        this.wallsUp = true;
+        this.game.wallMoveFinishSound.play();
+        //Walls down
+        setTimeout(() => {
+            console.log('  lwals down !');
+            this.lowerWallsWithTween();
+        }, this.wallTime);
     }
 
     lowerWallsWithTween() {
-        if (!this.wallsDown) {
-            const lowerDuration = 1000; // Duration of the lower animation in milliseconds
-
+        if (this.wallsUp) {
+            console.log('walls down!');
+            console.log(this.leftWall.position.y);
+            this.game.soundManager.wallMove.play();
             // Create animation keyframes for lowering walls
             const lowerAnimation = new BABYLON.Animation(
-                "lowerWallsAnimation",
+                "lowerAnimation",
                 "position.y",
-                30,
+                this.frameRate,
                 BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-                BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+                BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE
             );
 
-            // Define the keyframes
-            const lowerKeyframes = [
-                {
-                    frame: 0,
-                    value: this.leftWall.position.y
-                },
-                {
-                    frame: lowerDuration,
-                    value: this.wallDownPosition
-                }
-            ];
+            const keyFrames = [];
+
+            keyFrames.push({
+                frame: 0,
+                value: this.wallUpPosition // Start at the raised position
+            });
+
+            keyFrames.push({
+                frame: this.frameRate,
+                value: 0
+            });
 
             // Set the animation keyframes
-            lowerAnimation.setKeys(lowerKeyframes);
+            lowerAnimation.setKeys(keyFrames);
 
-            // Attach the animation to both walls
-            this.leftWall.animations.push(lowerAnimation);
-            this.rightWall.animations.push(lowerAnimation);
+            // Attach the animation to both parent meshes
+            this.leftWallParent.animations.push(lowerAnimation);
+            this.rightWallParent.animations.push(lowerAnimation);
 
             // Play the animation
-            this.scene.beginAnimation(this.leftWall, 0, lowerDuration, false);
-            this.scene.beginAnimation(this.rightWall, 0, lowerDuration, false);
+            this.scene.beginDirectAnimation(this.leftWallParent, [lowerAnimation], 0, this.frameRate, false);
+            this.scene.beginDirectAnimation(this.rightWallParent, [lowerAnimation], 0, this.frameRate, false);
 
             this.wallsUp = false;
-            this.wallsDown = true;
+
         }
     }
-
-    // raiseWalls() {
-    //     if (this.leftWall.position.y < this.wallUpPosition) {
-    //         this.leftWall.position.y += this.wallSpeed;
-    //         this.rightWall.position.y += this.wallSpeed;
-    //         this.wallMoving = true;
-    //     } else {
-    //         this.leftWall.position.y = this.wallUpPosition;
-    //         this.rightWall.position.y = this.wallUpPosition;
-    //         if (this.wallMoving) {
-    //             this.game.wallMoveFinishSound.play();
-    //             this.wallMoving = false;
-    //         }
-    //         this.wallTimer = setTimeout(() => {
-    //             this.wallsUp = false;
-    //             this.wallsDown = true;
-    //         }, this.wallTime);
-    //     }
-    // }
-    // lowerWalls() {
-    //     if (!this.wallMoving) {
-    //         this.wallMoving = true;
-    //         this.game.wallMoveSound.play();
-    //     }
-    //     if (this.leftWall.position.y > this.wallDownPosition) {
-    //         this.leftWall.position.y -= this.wallSpeed;
-    //         this.rightWall.position.y -= this.wallSpeed;
-
-    //     } else {
-    //         this.leftWall.position.y = this.wallDownPosition;
-    //         this.rightWall.position.y = this.wallDownPosition;
-    //         this.wallsDown = false;
-    //     }
-    // }
-
-
 }
 export { Walls };

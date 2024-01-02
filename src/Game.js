@@ -77,16 +77,10 @@ class Game {
     }
     _startGameLoop() {
         this.engine.runRenderLoop(() => {
-            if (this.platform.wallsUp) {
-                this.platform.raiseWalls();
-            } else if (this.platform.wallsDown) {
-                this.platform.lowerWalls();
-            }
             this.gameObjectManager.updatePusher(); // Update the pusher's position
             this.coinPipeManager.updateCoinPipe(); // Update the coin pipe's position
             this.scene.render();
         });
-
     }
 
     playClickTone(durationInSeconds) {
@@ -152,21 +146,18 @@ class Game {
         const wallButton = document.getElementById('wallButton');
         if (wallButton) {
             wallButton.addEventListener('click', () => {
-                // Check if the walls are already moving, and if so, return
-                // if (this.platform.isWallsMoving) {
-                //     return;
-                // }
+                if(!this.platform.walls.wallsUp){
 
-                // Trigger the wall movement directly
+            
+                this.wallMoveSound.play();
                 this.platform.walls.raiseWallsWithTween();
-
-                // Play the wall move sound
-                //this.playWallMoveSound();
-
-                // Start the timer to lower the walls
+                
+                //Wall down after time expires
                 setTimeout(() => {
-                    this.platform.walls.lowerWallsWithTween();
-                }, 5000);
+                    console.log('walls setTimeout!');
+                    this.platform.walls.wallRaised();
+                }, this.platform.walls.wallTime);
+            }
             });
         }
         const toggleCameraLockButton = document.getElementById('toggleCameraLockButton');

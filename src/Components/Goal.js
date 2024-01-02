@@ -121,8 +121,9 @@ class Goal {
             this.game.dropTreat2Sound.play();
             //10 get chcolate and cupcake
         } else if (this.bonusCount >= 12 && this.bonusCount < 14) {
-            this.game.dropManager.dropChocolateBar();
             this.game.dropManager.dropCupcake();
+            this.game.dropManager.dropChocolateBar();
+           
             this.game.dropTreat2Sound.play();
             //12 and 13 get 2
         } else if (this.bonusCount >= 14 && this.bonusCount < 16) {

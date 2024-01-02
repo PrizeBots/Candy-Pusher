@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.babylonjs.com/; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline';">
+    
+
     <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1, user-scalable=no">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/style.css">
@@ -11,14 +14,13 @@
     <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
     <!-- <script src=" https://cdn.babylonjs.com/havok/HavokPhysics_umd.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.1/gsap.min.js"></script>
-
 
 </head>
-
 <body>
     <canvas id="renderCanvas" width="1031" height="580"></canvas>
     <button id="startButton">Start Game</button>
+    <!-- Debug -->
+    <button id="toggleCameraLockButton">Cam Lock</button>
     <!-- Controls -->
     <button id="makeCookieButton">Make Cookie</button>
     <button id="dropCookieButton">Drop Cookie</button>
@@ -31,7 +33,6 @@
     <button id="dropPieButton">Drop Pie</button>
     <button id="dropColaButton">Drop Cola</button>
     <button id="dropCakeButton">Drop Cake</button>
-    <button id="toggleCameraLockButton">Cam Lock</button>
     <!-- Labels -->
     <div id="coinCount">Cookies: 0</div>
     <div id="cupcakeCount">Cupcakes: 0</div>
@@ -40,8 +41,9 @@
     <div id="prizePool">Prize Pool: 0</div>
     <div id="scoreCount">Score: 0</div>
     <div id="sugarCount">Sugar: 0</div>
-    <!-- Import Game.js as a module -->
-    <script type="module" src="src/Game.js"></script>
+    <!--  Game -->
+    <!-- <script type="module" src="src/Game.js"></script> -->
+    <script src="../dist/bundle.js"></script>
 </body>
 
 </html>
