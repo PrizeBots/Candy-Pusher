@@ -86,8 +86,6 @@ class Objects {
         });
     }
 
-
-
     createDonut() {
         // Import the donut model
         BABYLON.SceneLoader.ImportMesh("", "assets/", "pinkDonut.glb", this.scene, (meshes) => {

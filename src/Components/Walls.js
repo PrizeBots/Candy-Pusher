@@ -213,7 +213,7 @@ class Walls {
         if (this.wallsUp) {
             console.log('walls down!');
             console.log(this.leftWall.position.y);
-            this.game.soundManager.wallMove.play();
+           // this.game.soundManager.wallMove.play();
             // Create animation keyframes for lowering walls
             const lowerAnimation = new BABYLON.Animation(
                 "lowerAnimation",
