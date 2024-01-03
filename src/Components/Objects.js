@@ -42,7 +42,6 @@ class Objects {
                
                     //BABYLON.SceneLoader.ImportMesh("", "assets/", "chocolateChipCookie.glb", this.scene, (meshes) => {
                     if (meshes.length > 0) {
-                        console.log("OOKIE!");
                         const cookieMesh = meshes[0];
                         cookieMesh.name = "cookie";
                         cookieMesh.initialCollision = true;

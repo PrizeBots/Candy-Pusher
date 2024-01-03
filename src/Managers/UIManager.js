@@ -1,8 +1,8 @@
 // UIManager.js
+//import { UI } from './Components/UI.js';
 class UIManager {
     constructor(game) {
         this.game = game;
-
         this.sugarCounterElement = document.createElement('div');
         this.sugarCounterElement.id = 'sugarCounter';
         // 
@@ -13,7 +13,6 @@ class UIManager {
         this.dropCounterElement.id = 'dropCounter';
         document.body.appendChild(this.dropCounterElement);
         document.body.appendChild(this.sugarCounterElement);
-
         document.body.appendChild(this.scoreCounterElement);
         // Create and append cookie counter element
         this.cookieCounterElement = document.createElement('div');
@@ -43,7 +42,7 @@ class UIManager {
         this.sugarCounterElement.textContent = `Sugar: ${this.game.sugar}`;
     }
     updateScore() {
-        console.log("updateScore ", this.game.score);
+        //console.log("updateScore ", this.game.score);
         this.scoreCounterElement.textContent = `Score: ${this.game.score}`;
     }
     updateDropCounter(availableDrops) {

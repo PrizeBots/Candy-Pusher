@@ -6,11 +6,12 @@ import { Platform } from './Components/Platform.js';
 import { DropManager } from './Managers/DropManager.js';
 import { CoinPipeManager } from './Managers/CoinPipeManager.js';
 import { LevelManager } from './Managers/LevelManager.js';
-import { UIManager } from './Managers/UIManager.js'; // Add this line at the top with other imports
+import { UIManager } from './Managers/UIManager.js';
 import { SoundManager } from './Managers/SoundManager.js';
 import { CookieMakerManager } from './Managers/CookieMakerManager.js';
 class Game {
     constructor(canvasId) {
+        this.debugMode = true;
         const startButton = document.getElementById('startButton');
         if (startButton) {
             startButton.addEventListener('click', () => {
@@ -39,7 +40,7 @@ class Game {
         this.cookieMaker = new CookieMakerManager(this);
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
         this.jingle2 = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25]; // C4 to E4
-        this.SoundManager = new SoundManager(this);
+        this.soundManager = new SoundManager(this);
         this.materialManager = new MaterialManager(this.scene);
         this.gameObjectManager = new GameObjectManager(this.scene, this.materialManager, this)
         this.platform = new Platform(this.scene, this.materialManager, this);
@@ -166,7 +167,6 @@ class Game {
                 this.sceneManager.cameraLock();
             });
         }
-
     }
 }
 const game = new Game('renderCanvas');

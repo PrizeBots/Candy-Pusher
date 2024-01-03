@@ -77,7 +77,7 @@ class Goal {
         //  console.log("SCORE ", this.game.score);
     }
     handleBonusWindow() {
-        console.log("handleBonusWindow");
+        //console.log("handleBonusWindow");
         if (!this.bonusWindowActive) {
             this.bonusWindowActive = true;
             this.bonusCount = 0; // reset bonus count for the new window
