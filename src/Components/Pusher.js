@@ -4,10 +4,11 @@ export class Pusher {
         this.scene = scene;
         this.materialManager = materialManager;
         this.game = game;
-        this.pusherSpeed = 0.25;
+        this.pusherSpeed = 4;
         this.pusherDirection = 1;
         this.pusherLimitFront = -5;
         this.pusherLimitBack = -40;
+        this.frameRate = 60;
         this.createPusher();
     }
     createPusher() {
@@ -19,22 +20,41 @@ export class Pusher {
         pusher.physicsImpostor = new BABYLON.PhysicsImpostor(
             pusher,
             BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 0, friction: 1, kinematic: true },
+            { mass: 0, restitution: 0, friction: 1},
             this.scene
         );
+
         this.pusher = pusher;
+        this.pusherParent = new BABYLON.Mesh("pusherParent", this.scene);
+        this.pusherParent.addChild(this.pusher);
+        this.updatePusher();
         return Pusher;
     }
 
     updatePusher() {
         if (this.pusher) {
-            this.pusher.position.z += this.pusherSpeed * this.pusherDirection;
-            if (this.pusher.position.z >= this.pusherLimitFront || this.pusher.position.z <= this.pusherLimitBack) {
-                this.pusherDirection *= -1;
-            }
+            console.log('move that pusher!');
+            const frameRate = 10;
+            const zSlide = new BABYLON.Animation("zSlide", "position.z", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+            const keyFrames1 = [];
+            keyFrames1.push({
+                frame: 0,
+                value: this.pusherLimitFront
+            });
+            keyFrames1.push({
+                frame: frameRate,
+                value: this.pusherLimitBack
+            });
+            keyFrames1.push({
+                frame: 2 * frameRate,
+                value: this.pusherLimitFront
+            });
+            zSlide.setKeys(keyFrames1);
+            this.pusherParent.animations.push(zSlide);
+            this.scene.beginAnimation(this.pusherParent, 0, 2 * frameRate, true,this.pusherSpeed);
         }
     }
-    bigPush(){
+    bigPush() {
         console.log('  bigPush !');
         this.pusherDirection = 1;
         this.pusherSpeed = 10;
@@ -44,7 +64,7 @@ export class Pusher {
             this.pusherLimitFront = -5;
         }, 2000);
 
-        
+
 
 
     }

@@ -79,7 +79,7 @@ class Game {
     }
     _startGameLoop() {
         this.engine.runRenderLoop(() => {
-            this.gameObjectManager.updatePusher(); // Update the pusher's position
+          //  this.gameObjectManager.updatePusher(); // Update the pusher's position
             this.coinPipeManager.updateCoinPipe(); // Update the coin pipe's position
             this.scene.render();
         });

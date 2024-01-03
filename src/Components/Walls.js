@@ -163,7 +163,8 @@ class Walls {
     }
     raiseWallsWithTween() {
         if (!this.wallsUp) {
-            console.log('walls up!');
+            this.wallsUp = true;
+            console.log('walls up11');
             const raiseAnimation = new BABYLON.Animation(
                 "raiseAnimation",
                 "position.y",
@@ -175,31 +176,26 @@ class Walls {
             const keyFrames = [];
             keyFrames.push({
                 frame: 0,
-                value: 0 // Start at the current position
+                value: 0
             });
             keyFrames.push({
                 frame: this.frameRate,
                 value: this.wallUpPosition
             });
-            // Set the animation keyframes
             raiseAnimation.setKeys(keyFrames);
-            // Attach the animation to both parent meshes
             this.leftWallParent.animations.push(raiseAnimation);
             this.rightWallParent.animations.push(raiseAnimation);
-            // Set the onAnimationEnd callback
             raiseAnimation.onAnimationEnd = () => {
                 console.log('Left wall animation finished.');
                 this.wallRaised();
             };
-            // Play the animation
-            this.scene.beginAnimation(this.leftWallParent, 0, this.frameRate, false, this.wallSpeed);
-            this.scene.beginAnimation(this.rightWallParent, 0, this.frameRate, false, this.wallSpeed);
+            var leftWallUp = this.scene.beginAnimation(this.leftWallParent, 0, this.frameRate, false, this.wallSpeed);
+            var rightWallUp = this.scene.beginAnimation(this.rightWallParent, 0, this.frameRate, false, this.wallSpeed);
         }
     }
-    
+
     wallRaised() {
-        console.log('wall1111Raised');
-        this.wallsUp = true;
+        console.log('wal2333332222Raised');
         this.game.wallMoveFinishSound.play();
         //Walls down
         setTimeout(() => {
@@ -209,12 +205,12 @@ class Walls {
     }
 
     lowerWallsWithTween() {
-        console.log('walls lowering walls!')
+        console.log('walls111 lowering walls!')
         if (this.wallsUp) {
             // console.log('walls down!');
             // console.log(this.leftWall.position.y);
             this.game.wallMoveSound.play();
-           // this.game.soundManager.wallMove.play();
+            // this.game.soundManager.wallMove.play();
             // Create animation keyframes for lowering walls
             const lowerAnimation = new BABYLON.Animation(
                 "lowerAnimation",
@@ -223,12 +219,10 @@ class Walls {
                 BABYLON.Animation.ANIMATIONTYPE_FLOAT,
                 BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE
             );
-
             const keyFrames = [];
-
             keyFrames.push({
                 frame: 0,
-                value: this.wallUpPosition // Start at the raised position
+                value: this.wallUpPosition
             });
 
             keyFrames.push({
@@ -238,16 +232,17 @@ class Walls {
 
             // Set the animation keyframes
             lowerAnimation.setKeys(keyFrames);
-
             // Attach the animation to both parent meshes
             this.leftWallParent.animations.push(lowerAnimation);
             this.rightWallParent.animations.push(lowerAnimation);
-
             // Play the animation
             this.scene.beginDirectAnimation(this.leftWallParent, [lowerAnimation], 0, this.frameRate, false, this.wallSpeed);
             this.scene.beginDirectAnimation(this.rightWallParent, [lowerAnimation], 0, this.frameRate, false, this.wallSpeed);
-
-            this.wallsUp = false;
+            lowerAnimation.onAnimationEnd = () => {
+                this.wallsUp = false;
+                console.log('this.wallsUp = false;');
+                //     this.wallRaised();
+            };
 
         }
     }
