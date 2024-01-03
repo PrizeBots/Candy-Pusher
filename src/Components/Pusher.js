@@ -4,10 +4,10 @@ export class Pusher {
         this.scene = scene;
         this.materialManager = materialManager;
         this.game = game;
-        this.pusherSpeed = 4;
+        this.pusherSpeed = .5;
         this.pusherDirection = 1;
-        this.pusherLimitFront = -5;
-        this.pusherLimitBack = -40;
+        this.pusherLimitFront = 20;
+        this.pusherLimitBack = -15;
         this.frameRate = 60;
         this.createPusher();
     }

@@ -195,7 +195,7 @@ class Walls {
     }
 
     wallRaised() {
-        console.log('wal2333332222Raised');
+        console.log('walRaised');
         this.game.wallMoveFinishSound.play();
         //Walls down
         setTimeout(() => {
@@ -203,7 +203,7 @@ class Walls {
             this.lowerWallsWithTween();
         }, this.wallTime);
     }
-
+   
     lowerWallsWithTween() {
         console.log('walls111 lowering walls!')
         if (this.wallsUp) {
@@ -243,6 +243,11 @@ class Walls {
                 console.log('this.wallsUp = false;');
                 //     this.wallRaised();
             };
+            setTimeout(() => {
+                console.log('  walls going down !');
+                this.wallsUp = false;
+                this.game.wallMoveFinishSound.play();
+            }, this.wallTime);
 
         }
     }

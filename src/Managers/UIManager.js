@@ -20,7 +20,7 @@ class UIManager {
         document.body.appendChild(this.cookieCounterElement);
         // Create and append cupcake counter element
         this.cupcakeCounterElement = document.createElement('div');
-        this.cupcakeCounterElement.id = 'cupcakeCounter';
+        this.cupcakeCounterElement.id = 'cupcakeCount';
         document.body.appendChild(this.cupcakeCounterElement);
         // Create and append donut counter element
         this.donutCounterElement = document.createElement('div');
@@ -49,13 +49,14 @@ class UIManager {
         this.dropCounterElement.textContent = `Drops: ${availableDrops}/6`;
     }
     updateCookieCounter() {
-        this.cookieCounterElement.textContent = `Cookies: ${this.game.cookieCount}`;
+        this.cookieCounterElement.textContent = `${this.game.cookieCount}`;
     }
     updateCupcakeCounter() {
-        this.cupcakeCounterElement.textContent = `Cupcakes: ${this.game.cupcakeCount}`;
+        console.log("this.game.cupcakeCount", this.game.cupcakeCount);
+        this.cupcakeCounterElement.textContent = `${this.game.cupcakeCount}`;
     }
     updateDonutCounter() {
-        this.donutCounterElement.textContent = `Donuts: ${this.game.donutCount}`;
+        this.donutCounterElement.textContent = `${this.game.donutCount}`;
     }
     updateChocolateCounter() {
         this.chocolateCounterElement.textContent = `${this.game.chocolateCount}`;

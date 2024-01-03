@@ -21,12 +21,14 @@ class Goal {
             this.game.cookieCount++;
             this.game.uiManager.updateCookieCounter();
         } else if (objName === "cupcakeCylinder") {
+            console.log("cupcakeCylinder", objName);
             this.game.cupcakeCount += 1;
             this.getTreat = true;
             this.game.score += 2;
             this.bonusCount += 2;
             this.game.uiManager.updateCupcakeCounter();
         } else if (objName === "donutCylinder") {
+            console.log("donutCylinder ", objName);
             this.game.donutCount += 1;
             this.getTreat = true;
             this.game.score += 4;

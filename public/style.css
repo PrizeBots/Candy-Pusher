@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     overflow: hidden;
     width: 100%;
     height: 100%;
@@ -11,6 +12,7 @@ html, body {
     height: 100%;
     touch-action: none;
 }
+
 #testColor {
     position: absolute;
     top: 70px;
@@ -18,41 +20,7 @@ html, body {
     color: rgb(56, 199, 51);
     font-size: 20px;
 }
-/* Drop and Make Cookie Buttons*/
-#dropCookieButton {
-    position: absolute;
-    bottom: 20px;
-    left: 65%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: red;
-    color: rgb(0, 0, 0);
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-#makeCookieButton {
-    position: absolute;
-    bottom: 20px;
-    left: 35%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: red;
-    color: rgb(0, 0, 0);
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
 /* Drop and Score */
 #sugarCounter {
     position: absolute;
@@ -62,45 +30,98 @@ html, body {
     color: white;
     font-size: 20px;
 }
+
 #scoreCounter {
     position: absolute;
-    top: 170px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    font-size: 20px;
-}
-#dropCounter {
-    position: absolute;
-    top: 220px;
+    top: 150px;
     left: 50%;
     transform: translateX(-50%);
     color: white;
     font-size: 20px;
 }
 
-/* Counter Labels */
+#dropCounter {
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 20px;
+}
+
+/* Drop and Make Cookie Buttons*/
+.count-label {
+    font-size: 16px;
+    color: #eeeeee;
+    margin-left: 10px;
+    position: absolute;
+    top: 0;
+    right: 50%;
+}
+
+.dropCookieContainer {
+    position: relative;
+    /* Make the container a positioning context */
+    display: flex;
+    bottom: 120px;
+    left: 65%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#dropCookieButton {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: red;
+    color: rgb(0, 0, 0);
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #cookieCounter {
     position: absolute;
-    top: 10px;
-    left:2%;
+
+    bottom: 130px;
+    left: 50%;
     color: white;
     font-size: 20px;
 }
-#cupcakeCounter {
+
+.makeCookieContainer {
+    position: relative;
+    /* Make the container a positioning context */
+    display: flex;
+    bottom: 120px;
+    left: 35%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#makeCookieButton {
     position: absolute;
-    top: 40px;
-    left: 2%;
-    color: white;
-    font-size: 20px;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: red;
+    color: rgb(0, 0, 0);
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-#donutCounter {
-    position: absolute;
-    top: 70px;
-    left: 2%;
-    color: white;
-    font-size: 20px;
-}
+
+/* Counter Labels */
+
+
 
 /* Debug buttons */
 #wallButton {
@@ -119,6 +140,7 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+
 #bigPushButton {
     position: absolute;
     bottom: 20px;
@@ -136,11 +158,20 @@ html, body {
     align-items: center;
     justify-content: center;
 }
-#dropCupcakeButton {
+
+.dropCupcakeContainer {
     position: absolute;
-    bottom: 20px;
-    bottom: 30%;
     left: 5%;
+    /* Adjust the left position as needed */
+    bottom: 30%;
+    display: flex;
+    flex-direction: column;
+    /* Stack items vertically */
+    align-items: center;
+    /* Center horizontally within the container */
+}
+
+#dropCupcakeButton {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -153,11 +184,28 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+
+#cupcakeCount {
+    color: white;
+    font-size: 20px;
+    margin-top: 5px;
+    /* Add some space between the button and count label */
+}
+
+.dropDonutContainer {
+    position: absolute;
+    right: 5%;
+    /* Adjust the left position as needed */
+    bottom: 30%;
+    display: flex;
+    flex-direction: column;
+    /* Stack items vertically */
+    align-items: center;
+    /* Center horizontally within the container */
+}
+
 #dropDonutButton {
     position: absolute;
-    bottom: 20px;
-    bottom: 30%;
-    right: 5%;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -170,6 +218,13 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+
+#donutCount {
+    color: white;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
 #dropPieButton {
     position: absolute;
     bottom: 20px;
@@ -187,6 +242,7 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+
 #pieCounter {
     position: absolute;
     bottom: 20%;
@@ -194,6 +250,7 @@ html, body {
     color: white;
     font-size: 20px;
 }
+
 #dropChocolateBarButton {
     position: absolute;
     bottom: 20px;
@@ -211,6 +268,7 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+
 #chocolateCounter {
     position: absolute;
     bottom: 25%;
@@ -218,6 +276,7 @@ html, body {
     color: white;
     font-size: 20px;
 }
+
 #dropColaButton {
     position: absolute;
     bottom: 20px;
@@ -234,6 +293,7 @@ html, body {
     display: flex;
     align-items: center;
 }
+
 #dropCakeButton {
     position: absolute;
     bottom: 20px;
