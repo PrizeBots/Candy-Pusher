@@ -10,7 +10,7 @@ class SoundManager {
             volume: 1,
             loop: false
         });
-        this.game.wallMoveFinishSound = new BABYLON.Sound("wallMoveFinish", "../assets/wallMoveFinish.mp3", this.scene, {
+       this.game.wallMoveFinishSound = new BABYLON.Sound("wallMoveFinish", "../assets/sound/wallMoveFinish.mp3", this.scene, {
             autoplay: false,
             volume: 1,
             loop: false

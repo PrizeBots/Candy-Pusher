@@ -44,6 +44,7 @@ class Game {
         this.materialManager = new MaterialManager(this.scene);
         this.gameObjectManager = new GameObjectManager(this.scene, this.materialManager, this)
         this.platform = new Platform(this.scene, this.materialManager, this);
+
         const platform = this.platform.create();
         const platformImpostor = platform.physicsImpostor;
 
@@ -147,18 +148,20 @@ class Game {
         const wallButton = document.getElementById('wallButton');
         if (wallButton) {
             wallButton.addEventListener('click', () => {
-                if(!this.platform.walls.wallsUp){
+                if (!this.platform.walls.wallsUp) {
+                    this.wallMoveSound.play();
+                    this.platform.walls.raiseWallsWithTween();
+                    setTimeout(() => {
+                        this.platform.walls.wallRaised();
+                    }, this.platform.walls.wallTime);
+                }
+            });
+        }
+        const bigPushButton = document.getElementById('bigPushButton');
+        if (bigPushButton) {
+            bigPushButton.addEventListener('click', () => {
 
-            
-                this.wallMoveSound.play();
-                this.platform.walls.raiseWallsWithTween();
-                
-                //Wall down after time expires
-                setTimeout(() => {
-                    console.log('walls setTimeout!');
-                    this.platform.walls.wallRaised();
-                }, this.platform.walls.wallTime);
-            }
+                this.gameObjectManager.pusher.bigPush();
             });
         }
         const toggleCameraLockButton = document.getElementById('toggleCameraLockButton');
