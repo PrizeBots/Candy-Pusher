@@ -15,39 +15,42 @@ class Goal {
     checkGoal(collidedObject) {
         this.handleBonusWindow();
         var objName = collidedObject.name;
-        if (objName === "cookieCylinder") {
-            this.game.score++;
-            this.bonusCount++;
-            this.game.cookieCount++;
-            this.game.uiManager.updateCookieCounter();
-        } else if (objName === "cupcakeCylinder") {
-            console.log("cupcakeCylinder", objName);
-            this.game.cupcakeCount += 1;
-            this.getTreat = true;
-            this.game.score += 2;
-            this.bonusCount += 2;
-            this.game.uiManager.updateCupcakeCounter();
-        } else if (objName === "donutCylinder") {
-            console.log("donutCylinder ", objName);
-            this.game.donutCount += 1;
-            this.getTreat = true;
-            this.game.score += 4;
-            this.bonusCount += 4;
-            this.game.uiManager.updateDonutCounter();
-        } else if (objName === "chocolateBarBox") {
-            this.game.chocolateCount += 1;
-            this.getTreat = true;
-            this.game.score += 8;
-            this.bonusCount += 8;
-            this.game.uiManager.updateChocolateCounter();
-        } else if (objName === "pie") {
-            this.game.pieCount += 1;
-            this.getTreat = true;
-            this.game.score += 16;
-            this.bonusCount += 8;
-            this.game.uiManager.updatePieCounter();
-        } else {
-            console.log("goalPlane ?????s ", objName);
+        if (!collidedObject.isCounted) {
+            if (objName === "cookieCylinder") {
+                this.game.score++;
+                this.bonusCount++;
+                this.game.cookieCount++;
+                this.game.uiManager.updateCookieCounter();
+            } else if (objName === "cupcakeCylinder") {
+                this.game.cupcakeCount += 1;
+                this.getTreat = true;
+                this.game.score += 2;
+                this.bonusCount += 2;
+                this.game.uiManager.updateCupcakeCounter();
+            } else if (objName === "donutCylinder") {
+                this.game.donutCount += 1;
+                this.getTreat = true;
+                this.game.score += 4;
+                this.bonusCount += 4;
+                this.game.uiManager.updateDonutCounter();
+            } else if (objName === "chocolateBarBox") {
+                this.game.chocolateCount += 1;
+                this.getTreat = true;
+                this.game.score += 8;
+                this.bonusCount += 8;
+                this.game.uiManager.updateChocolateCounter();
+            } else if (objName === "pieBox") {
+
+                this.game.pieCount += 1;
+                this.getTreat = true;
+                this.game.score += 16;
+                this.bonusCount += 16;
+                this.game.uiManager.updatePieCounter();
+                collidedObject.isCounted = true; // Mark the pie as counted
+
+            } else {
+                console.log("goalPlane ?????s ", objName);
+            }
         }
         if (this.bonusCount === 1) {
             this.game.get1Sound.play();
@@ -125,7 +128,7 @@ class Goal {
         } else if (this.bonusCount >= 12 && this.bonusCount < 14) {
             this.game.dropManager.dropCupcake();
             this.game.dropManager.dropChocolateBar();
-           
+
             this.game.dropTreat2Sound.play();
             //12 and 13 get 2
         } else if (this.bonusCount >= 14 && this.bonusCount < 16) {

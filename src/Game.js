@@ -26,9 +26,12 @@ class Game {
         this.canvas = document.getElementById(canvasId);
         this.engine = new BABYLON.Engine(this.canvas, true, { antialias: true, allowSleep: true, sleepTimeLimit: 2 });
         this.cookieCount = 50;
-        this.cupcakeCount = 0;
-        this.donutCount = 0;
-        this.chocolateCount = 0;
+        this.cupcakeCount = 10;
+        this.donutCount = 10;
+        this.chocolateCount = 10;
+        this.pieCount = 10;
+        this.colaCount = 10;
+        this.cakeCount = 10;
         this.score = 0;
         this.sugar = 0;
         this.wallTokens = 100;
@@ -79,31 +82,10 @@ class Game {
     }
     _startGameLoop() {
         this.engine.runRenderLoop(() => {
-          //  this.gameObjectManager.updatePusher(); // Update the pusher's position
+            //  this.gameObjectManager.updatePusher(); // Update the pusher's position
             this.coinPipeManager.updateCoinPipe(); // Update the coin pipe's position
             this.scene.render();
         });
-    }
-
-    playClickTone(durationInSeconds) {
-        const noteFrequency = this.jingle2.shift();
-
-        // Create an oscillator node
-        const oscillator = this.audioContext.createOscillator();
-        oscillator.type = 'triangle'; // You can change the waveform here (sine, square, sawtooth, triangle, etc.)
-        oscillator.frequency.setValueAtTime(noteFrequency, this.audioContext.currentTime);
-
-        // Connect the oscillator to the audio context's output
-        oscillator.connect(this.audioContext.destination);
-
-        // Start the oscillator
-        oscillator.start();
-
-        // Stop the oscillator after a short duration (adjust as needed)
-        oscillator.stop(this.audioContext.currentTime + 0.5);
-
-        // Add the note back to the end of the array for looping
-        this.jingle2.push(noteFrequency);
     }
     _setupButtons() {
         const dropCookieButton = document.getElementById('dropCookieButton');
@@ -117,7 +99,6 @@ class Game {
             makeCookieButton.addEventListener('click', () => {
                 this.cookieMaker.makeCookie();
                 this.clickSound.play();
-                /// this.playClickTone(.1);
             });
         }
         const dropDonutButton = document.getElementById('dropDonutButton');
@@ -135,13 +116,25 @@ class Game {
         const dropChocolateBarButton = document.getElementById('dropChocolateBarButton');
         if (dropChocolateBarButton) {
             dropChocolateBarButton.addEventListener('click', () => {
-                this.dropManager.dropChocolateBar();
+                    this.dropManager.dropChocolateBar();
             });
         }
         const dropPieButton = document.getElementById('dropPieButton');
         if (dropPieButton) {
             dropPieButton.addEventListener('click', () => {
-                this.dropManager.dropPie();
+                    this.dropManager.dropPie();
+            });
+        }
+        const dropColaButton = document.getElementById('dropColaButton');
+        if (dropColaButton) {
+            dropColaButton.addEventListener('click', () => {
+                    this.dropManager.dropCola();
+            });
+        }
+        const dropCakeButton = document.getElementById('dropCakeButton');
+        if (dropCakeButton) {
+            dropCakeButton.addEventListener('click', () => {
+                    this.dropManager.dropCake();
             });
         }
         ///Wall Up
@@ -160,7 +153,6 @@ class Game {
         const bigPushButton = document.getElementById('bigPushButton');
         if (bigPushButton) {
             bigPushButton.addEventListener('click', () => {
-
                 this.gameObjectManager.pusher.bigPush();
             });
         }

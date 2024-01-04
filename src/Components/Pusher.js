@@ -33,7 +33,7 @@ export class Pusher {
 
     updatePusher() {
         if (this.pusher) {
-            console.log('move that pusher!');
+           
             const frameRate = 10;
             const zSlide = new BABYLON.Animation("zSlide", "position.z", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
             const keyFrames1 = [];

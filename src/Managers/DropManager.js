@@ -48,12 +48,12 @@ class DropManager {
     }
 
     dropCookie(playerDropped, dropPos) {
-     //   console.log('drop cookie at : ',dropPos)
+        //   console.log('drop cookie at : ',dropPos)
         const cookie = this.objects.createCookie(playerDropped, dropPos, this.platformImpostor, this.pusher);
-        
+
         if (!this.droppingCookies) {
             this.droppingCookies = true; // Set the flag to prevent multiple invocations
-          
+
             // Ensure the flag is reset when the promise is resolved
             cookie.then((result) => {
                 this.droppingCookies = false;
@@ -66,31 +66,53 @@ class DropManager {
             return cookie;
         }
     }
-
     dropDonut() {
-        const donut = this.objects.createDonut();
-        return donut;
+        if (this.game.donutCount > 0) {
+            this.game.donutCount -= 1;
+            this.game.uiManager.updateDonutCounter();
+            const donut = this.objects.createDonut();
+            return donut;
+        }
     }
     dropCupcake() {
-        const cupcake = this.objects.createCupcake();
-        return cupcake;
+        if (this.game.cupcakeCount > 0) {
+            this.game.cupcakeCount -= 1;
+            this.game.uiManager.updateCupcakeCounter();
+            const cupcake = this.objects.createCupcake();
+            return cupcake;
+        }
     }
-    dropChocolateBar(){
-        const chocolateBar = this.objects.createChocolateBar();
-        return chocolateBar;
+    dropChocolateBar() {
+        if (this.game.chocolateCount > 0) {
+            this.game.chocolateCount -= 1;
+            this.game.uiManager.updateChocolateCounter();
+            const chocolateBar = this.objects.createChocolateBar();
+            return chocolateBar;
+        }
     }
-    dropPie(){
-        const pie = this.objects.createPie();
-        return pie;
+    dropPie() {
+        if (this.game.pieCount > 0) {
+            this.game.pieCount -= 1;
+            this.game.uiManager.updatePieCounter();
+            const pie = this.objects.createPie();
+            return pie;
+        }
     }
-    dropCola(){
-        const cola = this.objects.createCola();
-        return cola;
+    dropCola() {
+        if (this.game.colaCount > 0) {
+            this.game.colaCount -= 1;
+            this.game.uiManager.updateColaCounter();
+            const cola = this.objects.createCola();
+            return cola;
+        }
     }
-    dropCake(){
-        const cake = this.objects.createCake();
-        return cake;
+    dropCake() {
+        if (this.game.cakeCount > 0) {
+            this.game.cakeCount -= 1;
+            this.game.uiManager.updateCakeCounter();
+            const cake = this.objects.createCake();
+            return cake;
+        }
     }
 }
-
 export { DropManager };
