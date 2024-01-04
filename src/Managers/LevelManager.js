@@ -3,6 +3,7 @@ class LevelManager {
         this.scene = scene;
         this.game = game;
         this.level = 1;
+        this.levelChecked = this.level;
     }
     //Level 1: Sugar - Sweets
     //Level 2: Air - Sports Balls
@@ -11,6 +12,29 @@ class LevelManager {
     //Level 5: Water - Sea Life
     //Level 6: Juice - Fruit
     //
+    checkScore(){
+        var score = this.game.score;
+        if (score >= 25 && score <50){
+            this.levelChecked = 2;
+        } else if (score >= 50 && score <100){
+            this.levelChecked = 3;
+        }else if (score >= 100 && score <150){
+            this.levelChecked = 4;
+        }
+
+        this.checkLevel();
+    }
+    checkLevel(){
+        if(!this.level === this.levelChecked){
+            this.level = this.levelChecked;
+            
+            // run congrats notice
+        }
+    }
+
+
+
+
     levelSystem(callback) {
         for (let i = 0; i < 2; i++) {
             const numRows = 1;

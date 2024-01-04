@@ -65,6 +65,8 @@ class Goal {
             } else {
                 console.log("goalPlane ?????s ", objName);
             }
+            this.game.levelManager.checkScore();
+
         }
         if (this.bonusCount === 1) {
             this.game.get1Sound.play();
