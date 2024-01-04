@@ -18,10 +18,13 @@ class LevelManager {
 
         if (score >= 25 && score <50){
             this.levelChecked = 2;
+       
         } else if (score >= 50 && score <100){
             this.levelChecked = 3;
+      
         }else if (score >= 100 && score <150){
             this.levelChecked = 4;
+        
         }
 
         this.checkLevel();
@@ -31,6 +34,8 @@ class LevelManager {
         console.log('Your levelChecked: ', this.levelChecked);
         if(this.level != this.levelChecked){
             this.level = this.levelChecked;
+            this.game.dropManager.dropWallToken();
+                 // this.game.dropManager.dropPushToken();
             console.log('Congrats! You reached Level: ',  this.level)
             // run congrats notice
             //give level prizes here

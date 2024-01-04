@@ -17,13 +17,13 @@ class Goal {
         var objName = collidedObject.name;
         if (!collidedObject.isCounted) {
             if (objName === "cookieCylinder") {
-                this.game.dropManager.dropWallToken();
+               
                 this.game.score++;
                 this.bonusCount++;
                 this.game.cookieCount++;
                 this.game.uiManager.updateCookieCounter();
             } else if (objName === "cupcakeCylinder") {
-                this.game.dropManager.dropPushToken();
+              
                 this.game.cupcakeCount += 1;
                 this.getTreat = true;
                 this.game.score += 2;
@@ -66,13 +66,13 @@ class Goal {
                 collidedObject.isCounted = true; // Mark the pie as counted
 
             }  else if (objName === "wallToken") {
-                this.game.wallCount += 1;
+                this.game.wallTokens += 1;
                 this.getTreat = true;
                 this.game.uiManager.updateWallCounter();
                 collidedObject.isCounted = true; // Mark the pie as counted
 
             }  else if (objName === "pushToken") {
-                this.game.pushCount += 1;
+                this.game.pushTokens += 1;
                 this.game.uiManager.updatePushCounter();
                 collidedObject.isCounted = true; // Mark the pie as counted
 
