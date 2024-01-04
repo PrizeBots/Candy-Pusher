@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "npm-run-all -s build serve",
     "build": "webpack --mode production",
-    "serve": "webpack serve --mode development"
+    "serve": "webpack serve --mode development",
+    "start": "webpack serve --open",
+    "watch": "webpack --watch"
   },
   "author": "",
   "license": "ISC",

@@ -131,7 +131,7 @@ class Objects {
                 cylinder.position = new BABYLON.Vector3(0, 40, 0);
                 cupcake.parent = cylinder;
                 cylinder.physicsImpostor = new BABYLON.PhysicsImpostor(cylinder, BABYLON.PhysicsImpostor.CylinderImpostor, {
-                    mass: 2, restitution: 0.1, friction: 0.05
+                    mass: 2.1, restitution: 0.05, friction: 0.1
                 }, this.scene);
                 cylinder.isVisible = false;
             }
@@ -236,14 +236,14 @@ class Objects {
             if (meshes.length > 0) {
                 const cola = meshes[0];
                 cola.name = "cola";
-                cola.position = new BABYLON.Vector3(0, 26, 0);
+                cola.position = new BABYLON.Vector3(0, 25, 0);
                 cola.rotation = BABYLON.Vector3.Zero();
                 cola.setPivotMatrix(BABYLON.Matrix.Translation(0, -cola.scaling.y, 0));
                 cola.scaling = new BABYLON.Vector3(25, 25, 25);
                 const cylinder = BABYLON.MeshBuilder.CreateCylinder("colaCylinder", {
-                    height: 39,
-                    diameterTop: cola.scaling.x * .4,
-                    diameterBottom: cola.scaling.x * .65,
+                    height: 45,
+                    diameterTop: cola.scaling.x * .2,
+                    diameterBottom: cola.scaling.x * .60,
                     tessellation: 12,
                 }, this.scene);
                 cylinder.position = new BABYLON.Vector3(0, 40, 0);
@@ -260,14 +260,14 @@ class Objects {
             if (meshes.length > 0) {
                 const cake = meshes[0];
                 cake.name = "cake";
-                cake.position = new BABYLON.Vector3(0, 13, 0);
+                cake.position = new BABYLON.Vector3(0, 35, 0);
                 cake.rotation = BABYLON.Vector3.Zero();
                 cake.setPivotMatrix(BABYLON.Matrix.Translation(0, -cake.scaling.y, 0));
                 cake.scaling = new BABYLON.Vector3(25, 25, 25);
                 const cylinder = BABYLON.MeshBuilder.CreateCylinder("cakeCylinder", {
-                    height: 10,
+                    height: 15,
                     diameterTop: cake.scaling.x * 1,
-                    diameterBottom: cake.scaling.x * 1,
+                    diameterBottom: cake.scaling.x * 1.12,
                     tessellation: 12,
                 }, this.scene);
                 cylinder.position = new BABYLON.Vector3(0, 60, 0);

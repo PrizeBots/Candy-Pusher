@@ -66,52 +66,83 @@ class DropManager {
             return cookie;
         }
     }
-    dropDonut() {
-        if (this.game.donutCount > 0) {
-            this.game.donutCount -= 1;
-            this.game.uiManager.updateDonutCounter();
+    dropDonut(playerDropped) {
+        if (!playerDropped) {
             const donut = this.objects.createDonut();
             return donut;
+        } else {
+            if (this.game.donutCount > 0) {
+                this.game.donutCount -= 1;
+                this.game.uiManager.updateDonutCounter();
+                const donut = this.objects.createDonut();
+                return donut;
+            }
         }
     }
-    dropCupcake() {
-        if (this.game.cupcakeCount > 0) {
-            this.game.cupcakeCount -= 1;
-            this.game.uiManager.updateCupcakeCounter();
+    dropCupcake(playerDropped) {
+        if (!playerDropped) {
             const cupcake = this.objects.createCupcake();
             return cupcake;
+        } else {
+            if (this.game.cupcakeCount > 0) {
+                this.game.cupcakeCount -= 1;
+                this.game.uiManager.updateCupcakeCounter();
+                const cupcake = this.objects.createCupcake();
+                return cupcake;
+            }
         }
     }
-    dropChocolateBar() {
-        if (this.game.chocolateCount > 0) {
-            this.game.chocolateCount -= 1;
-            this.game.uiManager.updateChocolateCounter();
+    dropChocolateBar(playerDropped) {
+        if (!playerDropped) {
             const chocolateBar = this.objects.createChocolateBar();
             return chocolateBar;
+        } else {
+            if (this.game.chocolateCount > 0) {
+                this.game.chocolateCount -= 1;
+                this.game.uiManager.updateChocolateCounter();
+                const chocolateBar = this.objects.createChocolateBar();
+                return chocolateBar;
+            }
         }
+
     }
-    dropPie() {
-        if (this.game.pieCount > 0) {
-            this.game.pieCount -= 1;
-            this.game.uiManager.updatePieCounter();
+    dropPie(playerDropped) {
+        if (!playerDropped) {
             const pie = this.objects.createPie();
             return pie;
+        } else {
+            if (this.game.pieCount > 0) {
+                this.game.pieCount -= 1;
+                this.game.uiManager.updateChocolateCounter();
+                const pie = this.objects.createPie();
+                return pie;
+            }
         }
     }
-    dropCola() {
-        if (this.game.colaCount > 0) {
-            this.game.colaCount -= 1;
-            this.game.uiManager.updateColaCounter();
+    dropCola(playerDropped) {
+        if (!playerDropped) {
             const cola = this.objects.createCola();
             return cola;
+        } else {
+            if (this.game.colaCount > 0) {
+                this.game.colaCount -= 1;
+                this.game.uiManager.updateColaCounter();
+                const cola = this.objects.createCola();
+                return cola;
+            }
         }
     }
-    dropCake() {
-        if (this.game.cakeCount > 0) {
-            this.game.cakeCount -= 1;
-            this.game.uiManager.updateCakeCounter();
+    dropCake(playerDropped) {
+        if (!playerDropped) {
             const cake = this.objects.createCake();
             return cake;
+        } else {
+            if (this.game.cakeCount > 0) {
+                this.game.cakeCount -= 1;
+                this.game.uiManager.updateCakeCounter();
+                const cake = this.objects.createCake();
+                return cake;
+            }
         }
     }
 }

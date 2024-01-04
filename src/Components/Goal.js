@@ -40,12 +40,27 @@ class Goal {
                 this.bonusCount += 8;
                 this.game.uiManager.updateChocolateCounter();
             } else if (objName === "pieBox") {
-
                 this.game.pieCount += 1;
                 this.getTreat = true;
                 this.game.score += 16;
                 this.bonusCount += 16;
                 this.game.uiManager.updatePieCounter();
+                collidedObject.isCounted = true; // Mark the pie as counted
+
+            } else if (objName === "colaCylinder") {
+                this.game.colaCount += 1;
+                this.getTreat = true;
+                this.game.score += 32;
+                this.bonusCount += 32;
+                this.game.uiManager.updateColaCounter();
+                collidedObject.isCounted = true; // Mark the pie as counted
+
+            } else if (objName === "cakeCylinder") {
+                this.game.cakeCount += 1;
+                this.getTreat = true;
+                this.game.score += 64;
+                this.bonusCount += 64;
+                this.game.uiManager.updateCakeCounter();
                 collidedObject.isCounted = true; // Mark the pie as counted
 
             } else {
@@ -70,7 +85,7 @@ class Goal {
             this.game.get8Sound.play();
         } else if (this.bonusCount === 9) {
             this.game.get9Sound.play();
-        } else if (this.bonusCount === 10) {
+        } else if (this.bonusCount >= 10) {
             this.game.get10Sound.play();
         }
         if (this.getTreat) {
@@ -104,48 +119,128 @@ class Goal {
     //128 cake or shake token
     handleDropRewards() {
         //2 to 3 points gets 1 cupcake. 
-        if (this.bonusCount > 1 && this.bonusCount <= 3) {
-            var pos = new BABYLON.Vector3(0, 40, 0);
+        this.game.dropTreatSound.play();
+      //  this.game.dropManager.dropChocolateBar();
+        //   this.game.dropTreat2Sound.play();
+        var pos = new BABYLON.Vector3(0, 40, 0);
+        if (this.bonusCount === 2) {
             this.game.dropManager.dropCookie(false, pos);
-            this.game.dropTreatSound.play();
-            //4 to 5 points gets a donut
-        } else if (this.bonusCount > 3 && this.bonusCount <= 5) {
+        } else if (this.bonusCount === 3) {
+            this.game.dropManager.dropCupcake(false);
+        } else if (this.bonusCount === 4) {
             this.game.dropManager.dropCupcake();
-            this.game.dropTreat2Sound.play();
-        } else if (this.bonusCount >= 6 && this.bonusCount < 8) {
-            this.game.dropManager.dropDonut();
-            this.game.dropTreat2Sound.play();
-            //6 and 7 points gets 2
-        } else if (this.bonusCount >= 7 && this.bonusCount < 10) {
-            this.game.dropManager.dropCupcake();
-            this.game.dropManager.dropDonut();
-            this.game.dropTreat2Sound.play();
-            //8 to 9 points gets chocolate
-        } else if (this.bonusCount >= 10 && this.bonusCount < 12) {
-            this.game.dropManager.dropChocolateBar();
-            this.game.dropTreat2Sound.play();
-            //10 get chcolate and cupcake
-        } else if (this.bonusCount >= 12 && this.bonusCount < 14) {
-            this.game.dropManager.dropCupcake();
-            this.game.dropManager.dropChocolateBar();
-
-            this.game.dropTreat2Sound.play();
-            //12 and 13 get 2
-        } else if (this.bonusCount >= 14 && this.bonusCount < 16) {
-            this.game.dropManager.dropChocolateBar();
-            this.game.dropManager.dropDonut();
-            this.game.dropTreat2Sound.play();
-            //14 and 15 get 2
-        } else if (this.bonusCount >= 16 && this.bonusCount < 18) {
-            this.game.dropManager.dropChocolateBar();
-            this.game.dropManager.dropCupcake();
-            this.game.dropManager.dropDonut();
-            this.game.dropTreat2Sound.play();
-            //16 and 17 get pie
-        } else if (this.bonusCount >= 16 && this.bonusCount < 18) {
-            this.game.dropManager.dropPie();
-            this.game.dropTreat2Sound.play();
+            this.game.dropManager.dropCookie(false, pos);
+        } else if (this.bonusCount === 5) {
+            this.game.dropManager.dropDonut(false);
+        } else if (this.bonusCount === 6) {
+            this.game.dropManager.dropDonut(false);
+            this.game.dropManager.dropCookie(false, pos);
+        } else if (this.bonusCount === 7) {
+            this.game.dropManager.dropCupcake(false);
+            this.game.dropManager.dropDonut(false);
+        } else if (this.bonusCount === 8) {
+            this.game.dropManager.dropCupcake(false);
+            this.game.dropManager.dropDonut(false);
+            this.game.dropManager.dropCookie(false, pos);
+        } else if (this.bonusCount === 9) {
+            this.game.dropManager.dropChocolateBar(false);
+        } else if (this.bonusCount === 10) {
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropCookie(false, pos);
+        } else if (this.bonusCount === 11) {
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropCupcake(false);
+        } else if (this.bonusCount === 12) {
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropCupcake(false);
+            this.game.dropManager.dropCookie(false, pos);
+        } else if (this.bonusCount === 13) {
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropDonut(false);
+        } else if (this.bonusCount === 14) {
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropDonut(false);
+            this.game.dropManager.dropCookie(false, pos);
+        } else if (this.bonusCount === 15) {
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropDonut(false);
+            this.game.dropManager.dropCupcake(false);
+        } else if (this.bonusCount === 15) {
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropDonut(false);
+            this.game.dropManager.dropCupcake(false);
+            this.game.dropManager.dropCookie(false, pos);
+        } else if (this.bonusCount === 16) {
+            this.game.dropManager.dropPie(false);
+        } else if (this.bonusCount === 17) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropCookie(false, pos);
+        } else if (this.bonusCount === 18) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropCupcake(false);
+        } else if (this.bonusCount === 19) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropCupcake(false);
+            this.game.dropManager.dropCookie(false, pos);
+        } else if (this.bonusCount === 20) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropDonut(false);
+        } else if (this.bonusCount === 21) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropDonut(false);
+            this.game.dropManager.dropCookie(false, pos);
+        } else if (this.bonusCount === 22) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropDonut(false);
+            this.game.dropManager.dropCupcake(false);
+        } else if (this.bonusCount === 23) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropDonut(false);
+            this.game.dropManager.dropCupcake(false);
+            this.game.dropManager.dropCookie(false, pos);
+        } else if (this.bonusCount === 24) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropChocolateBar(false);
+        }else if (this.bonusCount === 25) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropCookie(false, pos);
+        }else if (this.bonusCount === 26) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropCupcake(false);
+        }else if (this.bonusCount === 27) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropCupcake(false);
+            this.game.dropManager.dropCookie(false, pos);
+        }else if (this.bonusCount === 28) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropDonut(false);
+        }else if (this.bonusCount === 29) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropDonut(false);
+            this.game.dropManager.dropCookie(false, pos);
+        }else if (this.bonusCount === 30) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropDonut(false);
+            this.game.dropManager.dropCupcake(false);
+        }else if (this.bonusCount === 31) {
+            this.game.dropManager.dropPie(false);
+            this.game.dropManager.dropChocolateBar(false);
+            this.game.dropManager.dropDonut(false);
+            this.game.dropManager.dropCupcake(false);
+            this.game.dropManager.dropCookie(false, pos);
+        }else if (this.bonusCount === 32) {
+            this.game.dropManager.dropCola(false);
+        }else if (this.bonusCount === 33) {
+            this.game.dropManager.dropCola(false);
+            this.game.dropManager.dropCookie(false, pos);
         }
+        
     }
 
 }

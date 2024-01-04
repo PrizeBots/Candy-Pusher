@@ -25,16 +25,16 @@ class Game {
         window.addEventListener('keydown', (event) => this.onKeyDown(event));
         this.canvas = document.getElementById(canvasId);
         this.engine = new BABYLON.Engine(this.canvas, true, { antialias: true, allowSleep: true, sleepTimeLimit: 2 });
-        this.cookieCount = 50;
-        this.cupcakeCount = 10;
-        this.donutCount = 10;
-        this.chocolateCount = 10;
-        this.pieCount = 10;
-        this.colaCount = 10;
-        this.cakeCount = 10;
+        this.cookieCount = 20;
+        this.cupcakeCount = 0;
+        this.donutCount = 0;
+        this.chocolateCount = 0;
+        this.pieCount = 0;
+        this.colaCount = 0;
+        this.cakeCount = 0;
         this.score = 0;
         this.sugar = 0;
-        this.wallTokens = 100;
+        this.wallTokens = 3;
         this.wallsUp = false;
         this.wallsDown = false;
         this.sceneManager = new SceneManager(this.engine, this.canvas);
@@ -104,37 +104,37 @@ class Game {
         const dropDonutButton = document.getElementById('dropDonutButton');
         if (dropDonutButton) {
             dropDonutButton.addEventListener('click', () => {
-                this.dropManager.dropDonut();
+                this.dropManager.dropDonut(true);
             });
         }
         const dropCupcakeButton = document.getElementById('dropCupcakeButton');
         if (dropCupcakeButton) {
             dropCupcakeButton.addEventListener('click', () => {
-                this.dropManager.dropCupcake();
+                this.dropManager.dropCupcake(true);
             });
         }
         const dropChocolateBarButton = document.getElementById('dropChocolateBarButton');
         if (dropChocolateBarButton) {
             dropChocolateBarButton.addEventListener('click', () => {
-                    this.dropManager.dropChocolateBar();
+                    this.dropManager.dropChocolateBar(true);
             });
         }
         const dropPieButton = document.getElementById('dropPieButton');
         if (dropPieButton) {
             dropPieButton.addEventListener('click', () => {
-                    this.dropManager.dropPie();
+                    this.dropManager.dropPie(true);
             });
         }
         const dropColaButton = document.getElementById('dropColaButton');
         if (dropColaButton) {
             dropColaButton.addEventListener('click', () => {
-                    this.dropManager.dropCola();
+                    this.dropManager.dropCola(true);
             });
         }
         const dropCakeButton = document.getElementById('dropCakeButton');
         if (dropCakeButton) {
             dropCakeButton.addEventListener('click', () => {
-                    this.dropManager.dropCake();
+                    this.dropManager.dropCake(true);
             });
         }
         ///Wall Up
