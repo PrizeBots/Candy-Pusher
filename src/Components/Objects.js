@@ -8,7 +8,7 @@ class Objects {
     async initializeMasterCookie() {
         // Load the master cookie mesh
         try {
-            const result = await BABYLON.SceneLoader.ImportMeshAsync("", "assets/", "chocolateChipCookie.glb", this.scene);
+            const result = await BABYLON.SceneLoader.ImportMeshAsync("", "assets/", "coqCoin.glb", this.scene);
             // Log the results to inspect what's being loaded
             console.log("Loaded meshes:", result.meshes);
             // Find and assign the actual cookie mesh with geometry
@@ -38,21 +38,21 @@ class Objects {
         }
         return new Promise(async (resolve) => {
             const cookie = await new Promise((innerResolve) => {
-                BABYLON.SceneLoader.ImportMesh("", "assets/", "sugarCookie.glb", this.scene, (meshes) => {
+                BABYLON.SceneLoader.ImportMesh("", "assets/", "coqCoin.glb", this.scene, (meshes) => {
                
                     //BABYLON.SceneLoader.ImportMesh("", "assets/", "chocolateChipCookie.glb", this.scene, (meshes) => {
                     if (meshes.length > 0) {
                         const cookieMesh = meshes[0];
                         cookieMesh.name = "cookie";
                         cookieMesh.initialCollision = true;
-                        cookieMesh.position = new BABYLON.Vector3(0, 17.2, 0);
+                        cookieMesh.position = new BABYLON.Vector3(0,2.5, 0);
                         cookieMesh.rotation = BABYLON.Vector3.Zero();
                         cookieMesh.setPivotMatrix(BABYLON.Matrix.Translation(0, -cookieMesh.scaling.y, 0));
-                        cookieMesh.scaling = new BABYLON.Vector3(14, 18, 14);
+                        cookieMesh.scaling = new BABYLON.Vector3(3, 3.5, 3);
                         // Create the cylinder and physics impostor
                         const cylinder = BABYLON.MeshBuilder.CreateCylinder("cookieCylinder", {
                             height: 2,
-                            diameterTop: 7.5,
+                            diameterTop: 8,
                             diameterBottom: 8,
                             tessellation: 12,
                         }, this.scene);
@@ -76,7 +76,7 @@ class Objects {
                             }
                         });
                         cookieMesh.parent = cylinder;
-                        cylinder.isVisible = false;
+                      //  cylinder.isVisible = false;
                         innerResolve(cookieMesh); // Resolve the inner Promise with the created cookie
                     }
                 });

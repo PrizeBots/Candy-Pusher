@@ -1,5 +1,5 @@
 {
-  "name": "candy-pusher",
+  "name": "coq-pusher",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,6 @@
     "webpack-dev-server": "^4.15.1"
   },
   "keywords": ["game"],
-  "homepage": "https://zzlabs.online",
-  "description": "A super fun coin pusher like game where you push sugary treats to get more sugary treats!"
+  "homepage": "",
+  "description": ""
 }
