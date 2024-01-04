@@ -33,7 +33,6 @@ export class Pusher {
 
     updatePusher() {
         if (this.pusher) {
-           
             const frameRate = 10;
             const zSlide = new BABYLON.Animation("zSlide", "position.z", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
             const keyFrames1 = [];
@@ -57,15 +56,13 @@ export class Pusher {
     bigPush() {
         console.log('  bigPush !');
         this.pusherDirection = 1;
-        this.pusherSpeed = 10;
-        this.pusherLimitFront = 15;
+      //  this.pusherSpeed = 10;
+        this.pusherLimitFront = 40;
+        this.updatePusher();
         setTimeout(() => {
-            this.pusherSpeed = 0.25;
-            this.pusherLimitFront = -5;
+         //   this.pusherSpeed = 0.25;
+            this.pusherLimitFront = 20;
+            this.updatePusher();
         }, 2000);
-
-
-
-
     }
 }

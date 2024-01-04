@@ -10,7 +10,7 @@ class Walls {
         this.wallDirection = 1;
         this.wallTimer = null;
         this.wallsUp = false;
-        this.wallTime = 5000;
+        this.wallTime = 10000;
         this.wallMoving = false;
         this.frameRate = 60;
         this.DesignWalls();
@@ -185,10 +185,10 @@ class Walls {
             raiseAnimation.setKeys(keyFrames);
             this.leftWallParent.animations.push(raiseAnimation);
             this.rightWallParent.animations.push(raiseAnimation);
-            raiseAnimation.onAnimationEnd = () => {
-                console.log('Left wall animation finished.');
-                this.wallRaised();
-            };
+            // raiseAnimation.onAnimationEnd = () => {
+            //     console.log('Left wall animation finished.');
+            //     this.wallRaised();
+            // };
             var leftWallUp = this.scene.beginAnimation(this.leftWallParent, 0, this.frameRate, false, this.wallSpeed);
             var rightWallUp = this.scene.beginAnimation(this.rightWallParent, 0, this.frameRate, false, this.wallSpeed);
         }
@@ -197,21 +197,27 @@ class Walls {
     wallRaised() {
         console.log('walRaised');
         this.game.wallMoveFinishSound.play();
+        this.game.wallTimer = this.wallTime;
+        this.game.uiManager.updateWallTimer();
+        const wallCountDown = setInterval(() => {
+            console.log('1 second count down');
+            this.game.wallTimer -= 1000;
+            this.game.uiManager.updateWallTimer(); // Update the UI with the new timer value
+            if (this.game.wallTimer <= 0) {
+                clearInterval(wallCountDown); // Stop the countdown when timer reaches 0
+                console.log('  walls going down !');
+                this.lowerWallsWithTween();
+            }
+        }, 1000);
         //Walls down
-        setTimeout(() => {
-            console.log('  walls going down !');
-            this.lowerWallsWithTween();
-        }, this.wallTime);
+        // setTimeout(() => {
+           
+        // }, this.wallTime);
     }
    
     lowerWallsWithTween() {
-        console.log('walls111 lowering walls!')
         if (this.wallsUp) {
-            // console.log('walls down!');
-            // console.log(this.leftWall.position.y);
             this.game.wallMoveSound.play();
-            // this.game.soundManager.wallMove.play();
-            // Create animation keyframes for lowering walls
             const lowerAnimation = new BABYLON.Animation(
                 "lowerAnimation",
                 "position.y",
@@ -224,30 +230,24 @@ class Walls {
                 frame: 0,
                 value: this.wallUpPosition
             });
-
             keyFrames.push({
                 frame: this.frameRate,
                 value: 0
             });
-
-            // Set the animation keyframes
             lowerAnimation.setKeys(keyFrames);
-            // Attach the animation to both parent meshes
             this.leftWallParent.animations.push(lowerAnimation);
             this.rightWallParent.animations.push(lowerAnimation);
-            // Play the animation
             this.scene.beginDirectAnimation(this.leftWallParent, [lowerAnimation], 0, this.frameRate, false, this.wallSpeed);
             this.scene.beginDirectAnimation(this.rightWallParent, [lowerAnimation], 0, this.frameRate, false, this.wallSpeed);
-            lowerAnimation.onAnimationEnd = () => {
-                this.wallsUp = false;
-                console.log('this.wallsUp = false;');
-                //     this.wallRaised();
-            };
+            // lowerAnimation.onAnimationEnd = () => {
+            //     this.wallsUp = false;
+            //     //     this.wallRaised();
+            // };
             setTimeout(() => {
                 console.log('  walls going down !');
                 this.wallsUp = false;
                 this.game.wallMoveFinishSound.play();
-            }, this.wallTime);
+            }, 5000);
 
         }
     }

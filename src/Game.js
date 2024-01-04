@@ -35,8 +35,10 @@ class Game {
         this.score = 0;
         this.sugar = 0;
         this.wallTokens = 3;
+        this.wallTimer = 0;
         this.wallsUp = false;
         this.wallsDown = false;
+        this.pushTokens = 3;
         this.sceneManager = new SceneManager(this.engine, this.canvas);
         this.scene = this.sceneManager.getScene();
         this.uiManager = new UIManager(this);
@@ -116,44 +118,52 @@ class Game {
         const dropChocolateBarButton = document.getElementById('dropChocolateBarButton');
         if (dropChocolateBarButton) {
             dropChocolateBarButton.addEventListener('click', () => {
-                    this.dropManager.dropChocolateBar(true);
+                this.dropManager.dropChocolateBar(true);
             });
         }
         const dropPieButton = document.getElementById('dropPieButton');
         if (dropPieButton) {
             dropPieButton.addEventListener('click', () => {
-                    this.dropManager.dropPie(true);
+                this.dropManager.dropPie(true);
             });
         }
         const dropColaButton = document.getElementById('dropColaButton');
         if (dropColaButton) {
             dropColaButton.addEventListener('click', () => {
-                    this.dropManager.dropCola(true);
+                this.dropManager.dropCola(true);
             });
         }
         const dropCakeButton = document.getElementById('dropCakeButton');
         if (dropCakeButton) {
             dropCakeButton.addEventListener('click', () => {
-                    this.dropManager.dropCake(true);
+                this.dropManager.dropCake(true);
             });
         }
         ///Wall Up
         const wallButton = document.getElementById('wallButton');
         if (wallButton) {
             wallButton.addEventListener('click', () => {
-                if (!this.platform.walls.wallsUp) {
-                    this.wallMoveSound.play();
-                    this.platform.walls.raiseWallsWithTween();
-                    setTimeout(() => {
-                        this.platform.walls.wallRaised();
-                    }, this.platform.walls.wallTime);
+                if (this.wallTokens > 0) {
+                    if (!this.platform.walls.wallsUp) {
+                        this.wallTokens -= 1;
+                        this.uiManager.updateWallCounter();
+                        this.wallMoveSound.play();
+                        this.platform.walls.raiseWallsWithTween();
+                        setTimeout(() => {
+                            this.platform.walls.wallRaised();
+                        }, 5000);
+                    }
                 }
             });
         }
         const bigPushButton = document.getElementById('bigPushButton');
         if (bigPushButton) {
             bigPushButton.addEventListener('click', () => {
-                this.gameObjectManager.pusher.bigPush();
+                if (this.pushTokens > 0) {
+                    this.pushTokens -= 1;
+                    this.uiManager.updatePushCounter();
+                    this.gameObjectManager.pusher.bigPush();
+                }
             });
         }
         const toggleCameraLockButton = document.getElementById('toggleCameraLockButton');

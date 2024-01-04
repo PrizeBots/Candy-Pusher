@@ -6,7 +6,7 @@ class UIManager {
         this.sugarCounterElement = document.createElement('div');
         this.sugarCounterElement.id = 'sugarCounter';
         document.body.appendChild(this.sugarCounterElement);
-        // 
+        //Score
         this.scoreCounterElement = document.createElement('div');
         this.scoreCounterElement.id = 'scoreCounter';
         document.body.appendChild(this.scoreCounterElement);
@@ -14,6 +14,18 @@ class UIManager {
         this.dropCounterElement = document.createElement('div');
         this.dropCounterElement.id = 'dropCounter';
         document.body.appendChild(this.dropCounterElement);
+        // Walls
+        this.wallCounterElement = document.createElement('div');
+        this.wallCounterElement.id = 'wallCounter';
+        document.body.appendChild(this.wallCounterElement);
+        // Wall Timer
+        this.wallTimerElement = document.createElement('div');
+        this.wallTimerElement.id = 'wallTimer';
+        document.body.appendChild(this.wallTimerElement);
+        // Big Push
+        this.pushCounterElement = document.createElement('div');
+        this.pushCounterElement.id = 'pushCounter';
+        document.body.appendChild(this.pushCounterElement);
         // Create and append cookie counter element
         this.cookieCounterElement = document.createElement('div');
         this.cookieCounterElement.id = 'cookieCounter';
@@ -46,6 +58,9 @@ class UIManager {
         this.updateScore();
         this.updateSugarCounter();
         this.updateDropCounter(6);
+        this.updateWallCounter();
+        this.updateWallTimer();
+        this.updatePushCounter();
         this.updateCookieCounter(this.game.cookieCount);
         this.updateCupcakeCounter(this.game.cupcakeCount);
         this.updateDonutCounter(this.game.donutCount);
@@ -63,6 +78,16 @@ class UIManager {
     }
     updateDropCounter(availableDrops) {
         this.dropCounterElement.textContent = `Drops: ${availableDrops}/6`;
+    }
+    updateWallCounter() {
+        this.wallCounterElement.textContent = `${this.game.wallTokens}`;
+    }
+    updateWallTimer() {
+        var timer = this.game.wallTimer/1000;
+        this.wallTimerElement.textContent = `${timer}`;
+    }
+    updatePushCounter() {
+        this.pushCounterElement.textContent = `${this.game.pushTokens}`;
     }
     updateCookieCounter() {
         this.cookieCounterElement.textContent = `${this.game.cookieCount}`;
@@ -85,6 +110,6 @@ class UIManager {
     updateCakeCounter() {
         this.cakeCounterElement.textContent = `${this.game.cakeCount}`;
     }
-    
+
 }
 export { UIManager };

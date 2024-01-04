@@ -107,7 +107,7 @@ class Objects {
                 donut.parent = cylinder;
                 // Create a physics impostor for the cylinder
                 cylinder.physicsImpostor = new BABYLON.PhysicsImpostor(cylinder, BABYLON.PhysicsImpostor.CylinderImpostor, {
-                    mass: 3, restitution: 0.1, friction: 0.1
+                    mass: 5, restitution: 0.08, friction: 0.1
                 }, this.scene);
                 cylinder.isVisible = false;
             }
@@ -131,7 +131,7 @@ class Objects {
                 cylinder.position = new BABYLON.Vector3(0, 40, 0);
                 cupcake.parent = cylinder;
                 cylinder.physicsImpostor = new BABYLON.PhysicsImpostor(cylinder, BABYLON.PhysicsImpostor.CylinderImpostor, {
-                    mass: 2.1, restitution: 0.05, friction: 0.1
+                    mass: 4, restitution: 0.05, friction: 0.1
                 }, this.scene);
                 cylinder.isVisible = false;
             }
@@ -154,7 +154,7 @@ class Objects {
                 box.position = new BABYLON.Vector3(0, 40, 0);
                 chocolateBar.parent = box;
                 box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, {
-                    mass: 2.4, restitution: 0.05, friction: 0.07
+                    mass: 3.5, restitution: 0.05, friction: 0.07
                 }, this.scene);
                box.isVisible = false;
             }
@@ -180,7 +180,7 @@ class Objects {
                 box.position = new BABYLON.Vector3(0, 40, 0);
                 pie.parent = box;
                 box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, {
-                    mass: 2.4, restitution: 0.05, friction: 0.07
+                    mass: 4, restitution: 0.05, friction: 0.07
                 }, this.scene);
               // box.isVisible = false;
               pie.isCounted = false;
@@ -249,7 +249,7 @@ class Objects {
                 cylinder.position = new BABYLON.Vector3(0, 40, 0);
                 cola.parent = cylinder;
                 cylinder.physicsImpostor = new BABYLON.PhysicsImpostor(cylinder, BABYLON.PhysicsImpostor.CylinderImpostor, {
-                    mass: 2, restitution: 0.1, friction: 0.2
+                    mass: 5, restitution: 0.07, friction: 0.1
                 }, this.scene);
                 cylinder.isVisible = true;
             }
@@ -273,7 +273,7 @@ class Objects {
                 cylinder.position = new BABYLON.Vector3(0, 60, 0);
                 cake.parent = cylinder;
                 cylinder.physicsImpostor = new BABYLON.PhysicsImpostor(cylinder, BABYLON.PhysicsImpostor.CylinderImpostor, {
-                    mass: 2, restitution: 0.1, friction: 0.05
+                    mass: 9, restitution: 0.03, friction: 0.1
                 }, this.scene);
                 cylinder.isVisible = true;
             }

@@ -8,7 +8,6 @@ class Goal {
         this.bonusCount = 0;
         this.getTreat = false;
         this.init();
-
     }
     init() {
     }
