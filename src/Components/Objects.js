@@ -3,12 +3,12 @@ class Objects {
         this.scene = scene;
         this.materialManager = materialManager;
         this.game = game;
-      //  this.initializeMasterCookie();
+        //  this.initializeMasterCookie();
     }
     async initializeMasterCookie() {
         // Load the master cookie mesh
         try {
-            const result = await BABYLON.SceneLoader.ImportMeshAsync("", "assets/", "coqCoin.glb", this.scene);
+            const result = await BABYLON.SceneLoader.ImportMeshAsync("", "assets/", "sugarCookie.glb", this.scene);
             // Log the results to inspect what's being loaded
             console.log("Loaded meshes:", result.meshes);
             // Find and assign the actual cookie mesh with geometry
@@ -38,21 +38,21 @@ class Objects {
         }
         return new Promise(async (resolve) => {
             const cookie = await new Promise((innerResolve) => {
-                BABYLON.SceneLoader.ImportMesh("", "assets/", "coqCoin.glb", this.scene, (meshes) => {
-               
+                BABYLON.SceneLoader.ImportMesh("", "assets/", "sugarCookie.glb", this.scene, (meshes) => {
+
                     //BABYLON.SceneLoader.ImportMesh("", "assets/", "chocolateChipCookie.glb", this.scene, (meshes) => {
                     if (meshes.length > 0) {
                         const cookieMesh = meshes[0];
                         cookieMesh.name = "cookie";
                         cookieMesh.initialCollision = true;
-                        cookieMesh.position = new BABYLON.Vector3(0,2.5, 0);
+                        cookieMesh.position = new BABYLON.Vector3(0, 13, 0);
                         cookieMesh.rotation = BABYLON.Vector3.Zero();
                         cookieMesh.setPivotMatrix(BABYLON.Matrix.Translation(0, -cookieMesh.scaling.y, 0));
-                        cookieMesh.scaling = new BABYLON.Vector3(3, 3.5, 3);
+                        cookieMesh.scaling = new BABYLON.Vector3(14, 14, 14);
                         // Create the cylinder and physics impostor
                         const cylinder = BABYLON.MeshBuilder.CreateCylinder("cookieCylinder", {
                             height: 2,
-                            diameterTop: 8,
+                            diameterTop: 7,
                             diameterBottom: 8,
                             tessellation: 12,
                         }, this.scene);
@@ -76,7 +76,7 @@ class Objects {
                             }
                         });
                         cookieMesh.parent = cylinder;
-                      //  cylinder.isVisible = false;
+                        cylinder.isVisible = false;
                         innerResolve(cookieMesh); // Resolve the inner Promise with the created cookie
                     }
                 });
@@ -156,7 +156,7 @@ class Objects {
                 box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, {
                     mass: 3.5, restitution: 0.05, friction: 0.07
                 }, this.scene);
-               box.isVisible = false;
+                box.isVisible = false;
             }
         });
     }
@@ -171,7 +171,7 @@ class Objects {
                 pie.rotation = BABYLON.Vector3.Zero();
                 pie.setPivotMatrix(BABYLON.Matrix.Translation(0, -pie.scaling.y, 0));
                 pie.scaling = new BABYLON.Vector3(10, 10, 10);
-                const box =  this.createPieCollisionBox();
+                const box = this.createPieCollisionBox();
                 // const box = BABYLON.MeshBuilder.CreateBox("pieBox", {
                 //     height: 1.5,
                 //     width: 17,
@@ -182,8 +182,8 @@ class Objects {
                 box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, {
                     mass: 4, restitution: 0.05, friction: 0.07
                 }, this.scene);
-              // box.isVisible = false;
-              pie.isCounted = false;
+                // box.isVisible = false;
+                pie.isCounted = false;
             }
         });
     }
@@ -192,7 +192,7 @@ class Objects {
         const sliceWidth = 10;  // Width of the slice
         const sliceHeight = 1.5;  // Height of the slice
         const sliceDepth = 10;  // Depth of the slice
-    
+
         // Create three boxes to form the triangular collision area
         const box1 = BABYLON.MeshBuilder.CreateBox("box1", {
             height: sliceHeight,
@@ -200,7 +200,7 @@ class Objects {
             depth: sliceDepth
         }, this.scene);
         box1.position = new BABYLON.Vector3(0, 0, 0);
-    
+
         const box2 = BABYLON.MeshBuilder.CreateBox("box2", {
             height: sliceHeight,
             width: sliceWidth,
@@ -208,7 +208,7 @@ class Objects {
         }, this.scene);
         box2.position = new BABYLON.Vector3(sliceWidth / 2, 0, 0);
         box2.rotation.y = Math.PI / 3;  // Rotate the box to form a pie slice
-    
+
         const box3 = BABYLON.MeshBuilder.CreateBox("box3", {
             height: sliceHeight,
             width: sliceWidth,
@@ -216,11 +216,11 @@ class Objects {
         }, this.scene);
         box3.position = new BABYLON.Vector3(-sliceWidth / 2, 0, 0);
         box3.rotation.y = -Math.PI / 3;  // Rotate the box to form a pie slice
-    
+
         // Combine the boxes into a single parent mesh
         const pieCollisionBox = BABYLON.Mesh.MergeMeshes([box1, box2, box3], true, true, undefined, false, true);
         pieCollisionBox.name = 'pieBox';
-        console.log('pieCollisionBox!',pieCollisionBox.name);
+        console.log('pieCollisionBox!', pieCollisionBox.name);
         // Set the position and physics impostor for the collision box
         pieCollisionBox.position = new BABYLON.Vector3(0, 9, 0);
         pieCollisionBox.physicsImpostor = new BABYLON.PhysicsImpostor(pieCollisionBox, BABYLON.PhysicsImpostor.BoxImpostor, {

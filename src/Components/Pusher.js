@@ -56,13 +56,11 @@ export class Pusher {
     bigPush() {
         console.log('  bigPush !');
         this.pusherDirection = 1;
-      //  this.pusherSpeed = 10;
-        this.pusherLimitFront = 40;
+        this.pusherLimitFront = 60;
         this.updatePusher();
         setTimeout(() => {
-         //   this.pusherSpeed = 0.25;
             this.pusherLimitFront = 20;
             this.updatePusher();
-        }, 2000);
+        }, 500);
     }
 }

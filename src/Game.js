@@ -64,9 +64,9 @@ class Game {
         // Start the game loop
         this._startGameLoop();
         this._setupButtons();
-        const levelManager = new LevelManager(this.scene, this);
+        this.levelManager = new LevelManager(this.scene, this);
         ///init level 1
-        levelManager.levelSystem((cookies) => {
+        this.levelManager.levelSystem((cookies) => {
         });
 
     }
