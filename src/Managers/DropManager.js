@@ -47,6 +47,15 @@ class DropManager {
         }
     }
 
+    dropWallToken(){
+        const wallToken = this.objects.createWallToken();
+        return wallToken;
+
+    }
+    dropPushToken(){
+        const pushToken = this.objects.createPushToken();
+        return pushToken;
+    }
     dropCookie(playerDropped, dropPos) {
         //   console.log('drop cookie at : ',dropPos)
         const cookie = this.objects.createCookie(playerDropped, dropPos, this.platformImpostor, this.pusher);

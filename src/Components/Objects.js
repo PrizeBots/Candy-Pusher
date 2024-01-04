@@ -279,6 +279,30 @@ class Objects {
             }
         });
     }
+    createWallToken() {
+        BABYLON.SceneLoader.ImportMesh("", "assets/", "wallToken.glb", this.scene, (meshes) => {
+            if (meshes.length > 0) {
+                const wallToken = meshes[0];
+                wallToken.name = "wallToken";
+                wallToken.position = new BABYLON.Vector3(0, 3.5, 0);
+                wallToken.rotation = BABYLON.Vector3.Zero();
+                wallToken.setPivotMatrix(BABYLON.Matrix.Translation(0, -wallToken.scaling.y, 0));
+                wallToken.scaling = new BABYLON.Vector3(3.6, 3.6, 3.6);
+                const cylinder = BABYLON.MeshBuilder.CreateCylinder("wallToken", {
+                    height: 2,
+                    diameterTop: wallToken.scaling.x * 3,
+                    diameterBottom: wallToken.scaling.x * 3,
+                    tessellation: 12,
+                }, this.scene);
+                cylinder.position = new BABYLON.Vector3(0, 60, 0);
+                wallToken.parent = cylinder;
+                cylinder.physicsImpostor = new BABYLON.PhysicsImpostor(cylinder, BABYLON.PhysicsImpostor.CylinderImpostor, {
+                    mass: 9, restitution: 0.03, friction: 0.1
+                }, this.scene);
+                //cylinder.isVisible = true;
+            }
+        });
+    }
 }
 
 export { Objects };

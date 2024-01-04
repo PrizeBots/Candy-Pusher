@@ -27,6 +27,8 @@ class LevelManager {
         this.checkLevel();
     }
     checkLevel(){
+        console.log('Your Level: ', this.level);
+        console.log('Your levelChecked: ', this.levelChecked);
         if(this.level != this.levelChecked){
             this.level = this.levelChecked;
             console.log('Congrats! You reached Level: ',  this.level)
